@@ -3,7 +3,7 @@ package api
 import (
 	"net/http"
 
-	sets   "github.com/paregi12/torrentserver/engine/settings"
+	sets      "github.com/paregi12/torrentserver/engine/settings"
 
 	"github.com/gin-gonic/gin"
 )

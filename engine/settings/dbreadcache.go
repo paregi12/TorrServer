@@ -3,7 +3,7 @@ package settings
 import (
 	"sync"
 
-	  "github.com/paregi12/torrentserver/engine/log"
+	     "github.com/paregi12/torrentserver/engine/log"
 )
 
 type DBReadCache struct {

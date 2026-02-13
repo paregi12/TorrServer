@@ -5,10 +5,10 @@ import (
 	"strings"
 
 	tele "gopkg.in/telebot.v4"
-	  "github.com/paregi12/torrentserver/engine/log"
-	set   "github.com/paregi12/torrentserver/engine/settings"
-	  "github.com/paregi12/torrentserver/engine/torr"
-	  "github.com/paregi12/torrentserver/engine/web/api/utils"
+	     "github.com/paregi12/torrentserver/engine/log"
+	set      "github.com/paregi12/torrentserver/engine/settings"
+	     "github.com/paregi12/torrentserver/engine/torr"
+	     "github.com/paregi12/torrentserver/engine/web/api/utils"
 )
 
 func addTorrent(c tele.Context, link string) error {

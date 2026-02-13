@@ -9,8 +9,8 @@ import (
 	"reflect"
 	"time"
 
-	  "github.com/paregi12/torrentserver/engine/log"
-	  "github.com/paregi12/torrentserver/engine/web/api/utils"
+	     "github.com/paregi12/torrentserver/engine/log"
+	     "github.com/paregi12/torrentserver/engine/web/api/utils"
 
 	bolt "go.etcd.io/bbolt"
 )

@@ -3,7 +3,7 @@ package tgbot
 import (
 	"github.com/dustin/go-humanize"
 	tele "gopkg.in/telebot.v4"
-	  "github.com/paregi12/torrentserver/engine/torr"
+	     "github.com/paregi12/torrentserver/engine/torr"
 )
 
 func list(c tele.Context) error {

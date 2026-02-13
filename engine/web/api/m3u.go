@@ -13,10 +13,10 @@ import (
 
 	"github.com/anacrolix/missinggo/v2/httptoo"
 
-	sets   "github.com/paregi12/torrentserver/engine/settings"
-	  "github.com/paregi12/torrentserver/engine/torr"
-	  "github.com/paregi12/torrentserver/engine/torr/state"
-	  "github.com/paregi12/torrentserver/engine/utils"
+	sets      "github.com/paregi12/torrentserver/engine/settings"
+	     "github.com/paregi12/torrentserver/engine/torr"
+	     "github.com/paregi12/torrentserver/engine/torr/state"
+	     "github.com/paregi12/torrentserver/engine/utils"
 
 	"github.com/gin-gonic/gin"
 	"github.com/pkg/errors"

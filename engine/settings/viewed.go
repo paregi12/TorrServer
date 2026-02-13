@@ -3,7 +3,7 @@ package settings
 import (
 	"encoding/json"
 
-	  "github.com/paregi12/torrentserver/engine/log"
+	     "github.com/paregi12/torrentserver/engine/log"
 )
 
 type Viewed struct {

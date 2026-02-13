@@ -8,11 +8,11 @@ import (
 
 	"github.com/anacrolix/torrent"
 
-	sets   "github.com/paregi12/torrentserver/engine/settings"
-	  "github.com/paregi12/torrentserver/engine/tgbot/config"
-	  "github.com/paregi12/torrentserver/engine/torr"
-	  "github.com/paregi12/torrentserver/engine/torr/state"
-	  "github.com/paregi12/torrentserver/engine/torr/storage/torrstor"
+	sets      "github.com/paregi12/torrentserver/engine/settings"
+	     "github.com/paregi12/torrentserver/engine/tgbot/config"
+	     "github.com/paregi12/torrentserver/engine/torr"
+	     "github.com/paregi12/torrentserver/engine/torr/state"
+	     "github.com/paregi12/torrentserver/engine/torr/storage/torrstor"
 )
 
 var ERR_STOPPED = errors.New("stopped")

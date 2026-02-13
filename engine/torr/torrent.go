@@ -2,23 +2,23 @@ package torr
 
 import (
 	"errors"
-	  "github.com/paregi12/torrentserver/engine/torrshash"
+	     "github.com/paregi12/torrentserver/engine/torrshash"
 	"sort"
 	"strconv"
 	"sync"
 	"time"
 
-	utils2   "github.com/paregi12/torrentserver/engine/utils"
+	utils2      "github.com/paregi12/torrentserver/engine/utils"
 
 	"github.com/anacrolix/torrent"
 	"github.com/anacrolix/torrent/metainfo"
 
-	  "github.com/paregi12/torrentserver/engine/log"
-	  "github.com/paregi12/torrentserver/engine/settings"
-	  "github.com/paregi12/torrentserver/engine/torr/state"
-	cacheSt   "github.com/paregi12/torrentserver/engine/torr/storage/state"
-	  "github.com/paregi12/torrentserver/engine/torr/storage/torrstor"
-	  "github.com/paregi12/torrentserver/engine/torr/utils"
+	     "github.com/paregi12/torrentserver/engine/log"
+	     "github.com/paregi12/torrentserver/engine/settings"
+	     "github.com/paregi12/torrentserver/engine/torr/state"
+	cacheSt      "github.com/paregi12/torrentserver/engine/torr/storage/state"
+	     "github.com/paregi12/torrentserver/engine/torr/storage/torrstor"
+	     "github.com/paregi12/torrentserver/engine/torr/utils"
 )
 
 type Torrent struct {

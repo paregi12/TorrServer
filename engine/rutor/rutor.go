@@ -14,12 +14,12 @@ import (
 
 	"github.com/agnivade/levenshtein"
 
-	  "github.com/paregi12/torrentserver/engine/log"
-	  "github.com/paregi12/torrentserver/engine/rutor/models"
-	  "github.com/paregi12/torrentserver/engine/rutor/torrsearch"
-	  "github.com/paregi12/torrentserver/engine/rutor/utils"
-	  "github.com/paregi12/torrentserver/engine/settings"
-	utils2   "github.com/paregi12/torrentserver/engine/torr/utils"
+	     "github.com/paregi12/torrentserver/engine/log"
+	     "github.com/paregi12/torrentserver/engine/rutor/models"
+	     "github.com/paregi12/torrentserver/engine/rutor/torrsearch"
+	     "github.com/paregi12/torrentserver/engine/rutor/utils"
+	     "github.com/paregi12/torrentserver/engine/settings"
+	utils2      "github.com/paregi12/torrentserver/engine/torr/utils"
 )
 
 var (

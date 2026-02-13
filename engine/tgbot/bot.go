@@ -10,9 +10,9 @@ import (
 	tele "gopkg.in/telebot.v4"
 	"gopkg.in/telebot.v4/middleware"
 
-	  "github.com/paregi12/torrentserver/engine/log"
-	  "github.com/paregi12/torrentserver/engine/tgbot/config"
-	up   "github.com/paregi12/torrentserver/engine/tgbot/upload"
+	     "github.com/paregi12/torrentserver/engine/log"
+	     "github.com/paregi12/torrentserver/engine/tgbot/config"
+	up      "github.com/paregi12/torrentserver/engine/tgbot/upload"
 )
 
 func Start(token string) {

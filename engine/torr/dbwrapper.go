@@ -3,9 +3,9 @@ package torr
 import (
 	"encoding/json"
 
-	  "github.com/paregi12/torrentserver/engine/settings"
-	  "github.com/paregi12/torrentserver/engine/torr/state"
-	  "github.com/paregi12/torrentserver/engine/torr/utils"
+	     "github.com/paregi12/torrentserver/engine/settings"
+	     "github.com/paregi12/torrentserver/engine/torr/state"
+	     "github.com/paregi12/torrentserver/engine/torr/utils"
 
 	"github.com/anacrolix/torrent/metainfo"
 )

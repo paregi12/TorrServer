@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"net/http"
 
-	  "github.com/paregi12/torrentserver/engine/ffprobe"
-	sets   "github.com/paregi12/torrentserver/engine/settings"
+	     "github.com/paregi12/torrentserver/engine/ffprobe"
+	sets      "github.com/paregi12/torrentserver/engine/settings"
 
 	"github.com/gin-gonic/gin"
 )

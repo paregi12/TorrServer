@@ -14,10 +14,10 @@ import (
 	"github.com/anacrolix/torrent"
 	"github.com/anacrolix/torrent/metainfo"
 
-	  "github.com/paregi12/torrentserver/engine/settings"
-	  "github.com/paregi12/torrentserver/engine/torr/storage/torrstor"
-	  "github.com/paregi12/torrentserver/engine/torr/utils"
-	  "github.com/paregi12/torrentserver/engine/version"
+	     "github.com/paregi12/torrentserver/engine/settings"
+	     "github.com/paregi12/torrentserver/engine/torr/storage/torrstor"
+	     "github.com/paregi12/torrentserver/engine/torr/utils"
+	     "github.com/paregi12/torrentserver/engine/version"
 )
 
 type BTServer struct {

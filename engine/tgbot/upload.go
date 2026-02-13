@@ -4,7 +4,7 @@ import (
 	"strconv"
 
 	tele "gopkg.in/telebot.v4"
-	up   "github.com/paregi12/torrentserver/engine/tgbot/upload"
+	up      "github.com/paregi12/torrentserver/engine/tgbot/upload"
 )
 
 func upload(c tele.Context) error {

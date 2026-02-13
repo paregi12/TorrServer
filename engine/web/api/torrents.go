@@ -2,15 +2,15 @@ package api
 
 import (
 	"net/http"
-	  "github.com/paregi12/torrentserver/engine/torrshash"
+	     "github.com/paregi12/torrentserver/engine/torrshash"
 	"strings"
 
-	  "github.com/paregi12/torrentserver/engine/dlna"
-	  "github.com/paregi12/torrentserver/engine/log"
-	set   "github.com/paregi12/torrentserver/engine/settings"
-	  "github.com/paregi12/torrentserver/engine/torr"
-	  "github.com/paregi12/torrentserver/engine/torr/state"
-	  "github.com/paregi12/torrentserver/engine/web/api/utils"
+	     "github.com/paregi12/torrentserver/engine/dlna"
+	     "github.com/paregi12/torrentserver/engine/log"
+	set      "github.com/paregi12/torrentserver/engine/settings"
+	     "github.com/paregi12/torrentserver/engine/torr"
+	     "github.com/paregi12/torrentserver/engine/torr/state"
+	     "github.com/paregi12/torrentserver/engine/web/api/utils"
 
 	"github.com/anacrolix/torrent"
 	"github.com/gin-gonic/gin"

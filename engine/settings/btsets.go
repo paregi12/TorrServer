@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	  "github.com/paregi12/torrentserver/engine/log"
+	     "github.com/paregi12/torrentserver/engine/log"
 )
 
 type TorznabConfig struct {

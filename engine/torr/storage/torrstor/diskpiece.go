@@ -8,8 +8,8 @@ import (
 	"sync"
 	"time"
 
-	  "github.com/paregi12/torrentserver/engine/log"
-	  "github.com/paregi12/torrentserver/engine/settings"
+	     "github.com/paregi12/torrentserver/engine/log"
+	     "github.com/paregi12/torrentserver/engine/settings"
 )
 
 type DiskPiece struct {

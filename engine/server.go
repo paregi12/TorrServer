@@ -6,13 +6,12 @@ import (
 	"path/filepath"
 	"strconv"
 
-	  "github.com/paregi12/torrentserver/engine/tgbot"
+	"github.com/paregi12/torrentserver/engine/tgbot"
 
-	  "github.com/paregi12/torrentserver/engine/log"
-	  "github.com/paregi12/torrentserver/engine/settings"
-	  "github.com/paregi12/torrentserver/engine/web"
+	"github.com/paregi12/torrentserver/engine/log"
+	"github.com/paregi12/torrentserver/engine/settings"
+	"github.com/paregi12/torrentserver/engine/web"
 )
-
 func Start() int {
 	if !settings.InitSets(settings.Args.RDB, settings.Args.SearchWA) {
 		return -1
