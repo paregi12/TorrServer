@@ -38,9 +38,10 @@ jobs:
         run: |
           # Set NDK path for gomobile
           export ANDROID_NDK_HOME=$ANDROID_HOME/ndk/26.1.10909125
-          # Fix dependencies
+          # Force refresh dependencies to remove anet
+          rm -f go.sum
+          cd server && rm -f go.sum && go mod tidy && cd ..
           go mod tidy
-          cd server && go mod tidy && cd ..
           # Ensure x/mobile/bind is available
           go get golang.org/x/mobile/bind
           # Build with API 21+ to match modern NDK support
