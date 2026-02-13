@@ -5,6 +5,7 @@ go 1.22.0
 replace (
 	github.com/anacrolix/torrent v1.59.1 => github.com/tsynik/torrent v1.2.22
 	github.com/anacrolix/upnp v0.1.4 => github.com/tsynik/upnp v0.1.5
+	github.com/wlynxg/anet v0.0.5 => github.com/wlynxg/anet v0.0.3
 )
 
 require (
