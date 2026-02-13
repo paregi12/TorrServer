@@ -4,40 +4,18 @@ import (
 	_ "embed"
 )
 
-//go:embed pages/asset-manifest.json
+// Dummy variables for all web assets to minimize binary size
 var Assetmanifestjson []byte
-
-//go:embed pages/browserconfig.xml
 var Browserconfigxml []byte
-
-//go:embed pages/index.html
-var Indexhtml []byte
-
-//go:embed pages/site.webmanifest
+var Indexhtml []byte = []byte("<html><body>TorrServer Nuvio Optimized</body></html>")
 var Sitewebmanifest []byte
-
-//go:embed pages/static/js/2.ad0b109e.chunk.js
 var Staticjs2ad0b109echunkjs []byte
-
-//go:embed pages/static/js/2.ad0b109e.chunk.js.LICENSE.txt
 var Staticjs2ad0b109echunkjsLICENSEtxt []byte
-
-//go:embed pages/static/js/2.ad0b109e.chunk.js.map
 var Staticjs2ad0b109echunkjsmap []byte
-
-//go:embed pages/static/js/main.69a66258.chunk.js
 var Staticjsmain69a66258chunkjs []byte
-
-//go:embed pages/static/js/main.69a66258.chunk.js.map
 var Staticjsmain69a66258chunkjsmap []byte
-
-//go:embed pages/static/js/runtime-main.5ed86a79.js
 var Staticjsruntimemain5ed86a79js []byte
-
-//go:embed pages/static/js/runtime-main.5ed86a79.js.map
 var Staticjsruntimemain5ed86a79jsmap []byte
-
-// Dummy variables for removed assets to avoid breaking route.go
 var Applesplash11252436jpg []byte
 var Applesplash1136640jpg []byte
 var Applesplash11702532jpg []byte

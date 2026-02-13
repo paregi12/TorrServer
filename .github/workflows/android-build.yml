@@ -62,15 +62,15 @@ jobs:
           go mod tidy
           go get golang.org/x/mobile/bind
           
-          # Build with API 21+ and optimization flags to reduce size
+          # Build for ALL architectures (Universal APK support)
+          # Use -ldflags to strip symbols (-s -w)
           gomobile bind -v -target=android -androidapi 21 -ldflags="-s -w" -o torrentserver.aar ./bindings
           
-          # Compress native libraries with UPX
+          # HYPER SHRINK: Aggressive UPX compression
           mkdir -p tmp_aar
           unzip torrentserver.aar -d tmp_aar
-          # Fix UPX permissions and use Android-specific compression flag
           find tmp_aar -name "*.so" -exec chmod +x {} +
-          find tmp_aar -name "*.so" -exec upx --best --android-shlib {} +
+          find tmp_aar -name "*.so" -exec upx --best --ultra-brute --android-shlib {} +
           cd tmp_aar && zip -r ../torrentserver_upx.aar . && cd ..
           mv torrentserver_upx.aar torrentserver.aar
           rm -rf tmp_aar
