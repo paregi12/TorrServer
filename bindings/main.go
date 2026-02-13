@@ -13,7 +13,7 @@ func StartTorrentServer(pathdb string, port int64) int64 {
 		Path: pathdb,
 		Port: strconv.FormatInt(port, 10),
 	}
-	return int64(engine.Start(pathdb, int(port), false, false))
+	return int64(engine.Start())
 }
 
 func WaitTorrentServer() {
