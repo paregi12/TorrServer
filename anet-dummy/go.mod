@@ -1,2 +1,2 @@
 module github.com/wlynxg/anet
-go 1.23.6
+go 1.25.0
