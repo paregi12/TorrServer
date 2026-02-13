@@ -1,9 +1,9 @@
 package nuvioServer
 
 import (
-	"github.com/paregi12/torrentserver/server"
-	"github.com/paregi12/torrentserver/server/settings"
-	"github.com/paregi12/torrentserver/server/torr/utils"
+	"github.com/paregi12/torrentserver"
+	"github.com/paregi12/torrentserver/settings"
+	"github.com/paregi12/torrentserver/torr/utils"
 	"strconv"
 	"strings"
 )

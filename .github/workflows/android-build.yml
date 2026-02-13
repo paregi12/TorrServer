@@ -22,17 +22,6 @@ jobs:
           go clean -modcache
           go clean -cache
 
-      - name: Set up JDK
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-
-      - name: Setup Android SDK & NDK
-        uses: android-actions/setup-android@v3
-        with:
-          packages: "ndk;26.1.10909125" # Stable NDK version for Go
-
       - name: Install gomobile
         run: |
           go install golang.org/x/mobile/cmd/gomobile@latest
@@ -44,21 +33,13 @@ jobs:
           # Set NDK path for gomobile
           export ANDROID_NDK_HOME=$ANDROID_HOME/ndk/26.1.10909125
           
-          # Flatten everything into a single vendor directory in the root
-          # This resolves the multi-module confusion
+          # Simplified single-module build
           go mod tidy
-          go mod vendor
           
-          # PHYSICALLY NEUTRALIZE anet in the root vendor folder
-          find vendor -type d -name "anet" -exec rm -rf {} + || true
-          mkdir -p vendor/github.com/wlynxg/anet
-          cp server/anet-dummy/anet.go vendor/github.com/wlynxg/anet/
-          echo "package anet" > vendor/github.com/wlynxg/anet/go.mod
+          # Ensure anet is blocked
+          find . -name "anet" -type d -exec rm -rf {} + || true
           
-          # Ensure x/mobile/bind is available
-          go get golang.org/x/mobile/bind
-          
-          # Build using the physically modified vendor directory
+          # Build with API 21+ 
           gomobile bind -v -target=android -androidapi 21 -o torrentserver.aar ./bindings
 
       - name: Upload Artifact
