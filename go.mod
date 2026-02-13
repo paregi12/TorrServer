@@ -1,6 +1,6 @@
-module github.com/paregi12/torrentserver/server
+module github.com/paregi12/torrentserver
 
-go 1.23.6
+go 1.25.0
 
 replace (
 	github.com/anacrolix/torrent v1.59.1 => github.com/tsynik/torrent v1.2.22
@@ -18,7 +18,7 @@ require (
 	github.com/anacrolix/torrent v1.59.1
 	github.com/dustin/go-humanize v1.0.1
 	github.com/gin-contrib/cors v1.7.6
-	github.com/gin-contrib/location v1.0.1
+	github.com/gin-contrib/location v1.0.3
 	github.com/gin-gonic/gin v1.11.0
 	github.com/hanwen/go-fuse/v2 v2.9.0
 	github.com/kljensen/snowball v0.10.0
