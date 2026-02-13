@@ -14,8 +14,13 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: '1.22' 
+          go-version: '1.21' 
           cache-dependency-path: go.sum
+
+      - name: Clean Go Cache
+        run: |
+          go clean -modcache
+          go clean -cache
 
       - name: Set up JDK
         uses: actions/setup-java@v4
