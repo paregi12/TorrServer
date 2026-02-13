@@ -32,10 +32,7 @@ func (s *Storage) OpenTorrent(ctx context.Context, info *metainfo.Info, infoHash
 	ch.Init(info, infoHash)
 	s.caches[infoHash] = ch
 
-	return ts.TorrentImpl{
-		Piece: ch.Piece,
-		Close: ch.Close,
-	}, nil
+	return ch, nil
 }
 
 func (s *Storage) CloseHash(hash metainfo.Hash) {
