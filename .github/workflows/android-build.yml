@@ -62,8 +62,11 @@ jobs:
           # Ensure anet is physically blocked from linking
           find . -name "anet" -type d -exec rm -rf {} + || true
           
-          # SHRINK: Remove heavy splash images from the Go source to reduce binary size
-          rm -f engine/web/pages/template/pages/apple-splash-*.jpg
+          # SHRINK: Replace heavy splash images with tiny 1-byte dummies
+          # This saves 15MB+ per architecture while satisfying //go:embed
+          for f in engine/web/pages/template/pages/apple-splash-*.jpg; do
+            echo " " > "$f"
+          done
           
           # Build with API 21+ and optimization flags to reduce size (-s -w strips debug symbols)
           gomobile bind -v -target=android -androidapi 21 -ldflags="-s -w" -o torrentserver.aar ./bindings
