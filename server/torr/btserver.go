@@ -112,9 +112,9 @@ func (bt *BTServer) configure(ctx context.Context) {
 	bt.config.EstablishedConnsPerTorrent = settings.BTsets.ConnectionsLimit
 	bt.config.TotalHalfOpenConns = 500
 	// Encryption/Obfuscation
-	bt.config.EncryptionPolicy = torrent.EncryptionPolicy{ //	OE
-		ForceEncryption: settings.BTsets.ForceEncrypt, //	OE
-	} //	OE
+	// bt.config.EncryptionPolicy = torrent.EncryptionPolicy{ //	OE
+	// 	ForceEncryption: settings.BTsets.ForceEncrypt, //	OE
+	// } //	OE
 	// bt.config.HeaderObfuscationPolicy = torrent.HeaderObfuscationPolicy{ //	NE
 	// 	RequirePreferred: settings.BTsets.ForceEncrypt, //	NE
 	// 	Preferred:        true,                         //	NE
@@ -218,7 +218,7 @@ func (bt *BTServer) configureProxy() error {
 		log.Printf("Configuring proxy for all BitTorrent traffic: %s://%s", scheme, parsedURL.Host)
 
 		// Set ProxyURL - this will be used by anacrolix/torrent for all BitTorrent traffic
-		bt.config.ProxyURL = proxyURL
+		// bt.config.ProxyURL = proxyURL
 
 		// Also set HTTPProxy explicitly for HTTP tracker requests
 		bt.config.HTTPProxy = func(req *http.Request) (*url.URL, error) {
@@ -231,7 +231,7 @@ func (bt *BTServer) configureProxy() error {
 
 		// Set ProxyURL for peer connections, but don't set HTTPProxy
 		// This routes DHT and peer connections through proxy, but not HTTP tracker requests
-		bt.config.ProxyURL = proxyURL
+		// bt.config.ProxyURL = proxyURL
 
 		log.Println("Proxy configured successfully for peer and DHT connections only")
 	} else {
