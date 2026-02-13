@@ -13,7 +13,6 @@ import (
 
 	"github.com/anacrolix/dms/dlna/dms"
 	"github.com/anacrolix/log"
-	"github.com/wlynxg/anet"
 
 	"github.com/paregi12/torrentserver/server/settings"
 	"github.com/paregi12/torrentserver/server/web/pages/template"
@@ -27,7 +26,7 @@ func Start() {
 		Logger: logger.WithNames("dms", "github.com/paregi12/torrentserver/server"),
 		Interfaces: func() (ifs []net.Interface) {
 			var err error
-			ifaces, err := anet.Interfaces()
+			ifaces, err := net.Interfaces()
 			if err != nil {
 				logger.Levelf(log.Error, "%v", err)
 				return
@@ -172,7 +171,7 @@ func getDefaultFriendlyName() string {
 	}
 
 	if host == "localhost" { // useless host, use 1st IP
-		ifaces, err := anet.Interfaces()
+		ifaces, err := net.Interfaces()
 		if err != nil {
 			return ret + ": " + userName + "@" + host
 		}
@@ -182,7 +181,7 @@ func getDefaultFriendlyName() string {
 			if runtime.GOOS != "windows" && (i.Flags&net.FlagLoopback != 0 || i.Flags&net.FlagUp == 0 || i.Flags&net.FlagMulticast == 0) {
 				continue
 			}
-			addrs, _ := anet.InterfaceAddrsByInterface(&i)
+			addrs, _ := i.Addrs()
 			for _, addr := range addrs {
 				var ip net.IP
 				switch v := addr.(type) {
