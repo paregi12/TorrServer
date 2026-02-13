@@ -39,6 +39,9 @@ jobs:
           go install golang.org/x/mobile/cmd/gobind@latest
           gomobile init
 
+      - name: Install UPX
+        run: sudo apt-get install -y upx-ucl
+
       - name: Build AAR
         run: |
           # Set NDK path for gomobile
@@ -61,6 +64,14 @@ jobs:
           
           # Build with API 21+ and optimization flags to reduce size
           gomobile bind -v -target=android -androidapi 21 -ldflags="-s -w" -o torrentserver.aar ./bindings
+          
+          # Compress native libraries with UPX
+          mkdir -p tmp_aar
+          unzip torrentserver.aar -d tmp_aar
+          find tmp_aar -name "*.so" -exec upx --best {} +
+          cd tmp_aar && zip -r ../torrentserver_upx.aar . && cd ..
+          mv torrentserver_upx.aar torrentserver.aar
+          rm -rf tmp_aar
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
