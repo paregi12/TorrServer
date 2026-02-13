@@ -45,18 +45,15 @@ jobs:
           export ANDROID_NDK_HOME=$ANDROID_HOME/ndk/26.1.10909125
           
           # FORCEFULLY CREATE THE CORRECT GO.MOD
-          # This ensures the module path matches what the code expects
-          cat > go.mod <<EOF
-module github.com/paregi12/torrentserver
-
-go 1.25.0
-
-replace (
-	github.com/anacrolix/torrent v1.59.1 => github.com/tsynik/torrent v1.2.22
-	github.com/anacrolix/upnp v0.1.4 => github.com/tsynik/upnp v0.1.5
-	github.com/wlynxg/anet => ./anet-dummy
-)
-EOF
+          echo "module github.com/paregi12/torrentserver" > go.mod
+          echo "" >> go.mod
+          echo "go 1.25.0" >> go.mod
+          echo "" >> go.mod
+          echo "replace (" >> go.mod
+          echo "	github.com/anacrolix/torrent v1.59.1 => github.com/tsynik/torrent v1.2.22" >> go.mod
+          echo "	github.com/anacrolix/upnp v0.1.4 => github.com/tsynik/upnp v0.1.5" >> go.mod
+          echo "	github.com/wlynxg/anet => ./anet-dummy" >> go.mod
+          echo ")" >> go.mod
           
           # Tidy up
           go mod tidy
