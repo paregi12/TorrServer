@@ -1,6 +1,6 @@
 module github.com/paregi12/torrentserver/server
 
-go 1.23.6
+go 1.24.0
 
 replace (
 	github.com/anacrolix/torrent v1.59.1 => github.com/tsynik/torrent v1.2.22
@@ -26,7 +26,7 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/swaggo/files v1.0.1
 	github.com/swaggo/gin-swagger v1.6.1
-	github.com/swaggo/swag v1.16.6
+	github.com/swaggo/swag v1.16.3
 	go.etcd.io/bbolt v1.4.3
 	golang.org/x/exp v0.0.0-20251125195548-87e1e737ad39
 	golang.org/x/image v0.33.0
