@@ -1,6 +1,6 @@
 module github.com/paregi12/torrentserver/server
 
-go 1.22.7
+go 1.23.6
 
 replace (
 	github.com/anacrolix/torrent v1.59.1 => github.com/tsynik/torrent v1.2.22
