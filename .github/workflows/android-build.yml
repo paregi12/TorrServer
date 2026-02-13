@@ -55,20 +55,11 @@ jobs:
           echo "	github.com/wlynxg/anet => ./anet-dummy" >> go.mod
           echo ")" >> go.mod
           
-          # Tidy up dependencies and ensure we have mobile/bind
+          # Tidy up dependencies
           go mod tidy
           go get golang.org/x/mobile/bind
           
-          # Ensure anet is physically blocked from linking
-          find . -name "anet" -type d -exec rm -rf {} + || true
-          
-          # SHRINK: Replace heavy splash images with tiny 1-byte dummies
-          # This saves 15MB+ per architecture while satisfying //go:embed
-          for f in engine/web/pages/template/pages/apple-splash-*.jpg; do
-            echo " " > "$f"
-          done
-          
-          # Build with API 21+ and optimization flags to reduce size (-s -w strips debug symbols)
+          # Build with API 21+ and optimization flags to reduce size
           gomobile bind -v -target=android -androidapi 21 -ldflags="-s -w" -o torrentserver.aar ./bindings
 
       - name: Upload Artifact

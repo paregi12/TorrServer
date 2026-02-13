@@ -18,7 +18,6 @@ func SetupRoute(route gin.IRouter) {
 	authorized.GET("/shutdown/*reason", shutdown)
 
 	authorized.POST("/settings", settings)
-	authorized.POST("/torznab/test", torznabTest)
 
 	authorized.POST("/torrents", torrents)
 
@@ -43,18 +42,6 @@ func SetupRoute(route gin.IRouter) {
 	route.GET("/playlist/*fname", playList)
 
 	authorized.GET("/download/:size", download)
-
-	if config.SearchWA {
-		route.GET("/search/*query", rutorSearch)
-	} else {
-		authorized.GET("/search/*query", rutorSearch)
-	}
-
-	if config.SearchWA {
-		route.GET("/torznab/search/*query", torznabSearch)
-	} else {
-		authorized.GET("/torznab/search/*query", torznabSearch)
-	}
 
 	// Add storage settings endpoints
 	authorized.GET("/storage/settings", GetStorageSettings)

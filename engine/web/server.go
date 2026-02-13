@@ -1,20 +1,26 @@
 package web
 
 import (
+
 	"net"
+
 	"sort"
 
-	     "github.com/paregi12/torrentserver/engine/torrfs/fuse"
-	     "github.com/paregi12/torrentserver/engine/torrfs/webdav"
 
-	     "github.com/paregi12/torrentserver/engine/rutor"
 
 	"github.com/gin-contrib/cors"
+
 	"github.com/gin-contrib/location"
+
 	"github.com/gin-gonic/gin"
 
-	     "github.com/paregi12/torrentserver/engine/dlna"
-	     "github.com/paregi12/torrentserver/engine/settings"
+
+
+	"github.com/paregi12/torrentserver/engine/dlna"
+
+	"github.com/paregi12/torrentserver/engine/settings"
+
+
 	     "github.com/paregi12/torrentserver/engine/web/msx"
 
 	     "github.com/paregi12/torrentserver/engine/log"
@@ -58,7 +64,6 @@ func Start() bool {
 		log.TLogln("BTS.Connect() error!", err) // waitChan <- err
 		return false
 	}
-	rutor.Start()
 
 	gin.SetMode(gin.ReleaseMode)
 
@@ -80,16 +85,10 @@ func Start() bool {
 	api.SetupRoute(route)
 	msx.SetupRoute(route)
 	pages.SetupRoute(route)
-	if settings.Args.WebDAV {
-		webdav.MountWebDAV(route)
-	}
 
 	if settings.BTsets.EnableDLNA {
 		dlna.Start()
 	}
-
-	// Auto-mount FUSE filesystem if enabled
-	fuse.FuseAutoMount()
 
 	route.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
@@ -129,8 +128,6 @@ func Wait() error {
 
 func Stop() {
 	dlna.Stop()
-	// Unmount FUSE filesystem if mounted
-	fuse.FuseCleanup()
 	BTS.Disconnect()
 	waitChan <- nil
 }

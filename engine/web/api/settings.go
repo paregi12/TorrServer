@@ -3,15 +3,13 @@ package api
 import (
 	"net/http"
 
-	     "github.com/paregi12/torrentserver/engine/rutor"
-
-	     "github.com/paregi12/torrentserver/engine/dlna"
+	"github.com/paregi12/torrentserver/engine/dlna"
 
 	"github.com/gin-gonic/gin"
 	"github.com/pkg/errors"
 
-	sets      "github.com/paregi12/torrentserver/engine/settings"
-	     "github.com/paregi12/torrentserver/engine/torr"
+	sets "github.com/paregi12/torrentserver/engine/settings"
+	"github.com/paregi12/torrentserver/engine/torr"
 )
 
 // Action: get, set, def
@@ -50,14 +48,11 @@ func settings(c *gin.Context) {
 		if req.Sets.EnableDLNA {
 			dlna.Start()
 		}
-		rutor.Stop()
-		rutor.Start()
 		c.Status(200)
 		return
 	} else if req.Action == "def" {
 		torr.SetDefSettings()
 		dlna.Stop()
-		rutor.Stop()
 		c.Status(200)
 		return
 	}
