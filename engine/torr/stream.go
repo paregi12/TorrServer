@@ -15,9 +15,9 @@ import (
 	"github.com/anacrolix/missinggo/v2/httptoo"
 	"github.com/anacrolix/torrent"
 
-	mt  "github.com/paregi12/torrentserver/engine/mimetype"
-	sets  "github.com/paregi12/torrentserver/engine/settings"
-	 "github.com/paregi12/torrentserver/engine/torr/state"
+	mt   "github.com/paregi12/torrentserver/engine/mimetype"
+	sets   "github.com/paregi12/torrentserver/engine/settings"
+	  "github.com/paregi12/torrentserver/engine/torr/state"
 )
 
 // Add atomic counter for concurrent streams

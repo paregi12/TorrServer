@@ -12,8 +12,8 @@ import (
 
 	tele "gopkg.in/telebot.v4"
 
-	 "github.com/paregi12/torrentserver/engine/torr"
-	 "github.com/paregi12/torrentserver/engine/torr/state"
+	  "github.com/paregi12/torrentserver/engine/torr"
+	  "github.com/paregi12/torrentserver/engine/torr/state"
 )
 
 type Worker struct {

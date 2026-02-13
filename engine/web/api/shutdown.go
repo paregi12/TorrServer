@@ -5,8 +5,8 @@ import (
 	"strings"
 	"time"
 
-	sets  "github.com/paregi12/torrentserver/engine/settings"
-	 "github.com/paregi12/torrentserver/engine/torr"
+	sets   "github.com/paregi12/torrentserver/engine/settings"
+	  "github.com/paregi12/torrentserver/engine/torr"
 
 	"github.com/gin-gonic/gin"
 )

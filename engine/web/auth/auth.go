@@ -10,8 +10,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	 "github.com/paregi12/torrentserver/engine/log"
-	 "github.com/paregi12/torrentserver/engine/settings"
+	  "github.com/paregi12/torrentserver/engine/log"
+	  "github.com/paregi12/torrentserver/engine/settings"
 )
 
 func SetupAuth(engine *gin.Engine) {

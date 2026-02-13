@@ -9,9 +9,9 @@ import (
 	"strings"
 	"time"
 
-	 "github.com/paregi12/torrentserver/engine/log"
-	 "github.com/paregi12/torrentserver/engine/rutor/models"
-	 "github.com/paregi12/torrentserver/engine/settings"
+	  "github.com/paregi12/torrentserver/engine/log"
+	  "github.com/paregi12/torrentserver/engine/rutor/models"
+	  "github.com/paregi12/torrentserver/engine/settings"
 )
 
 type TorznabAttribute struct {

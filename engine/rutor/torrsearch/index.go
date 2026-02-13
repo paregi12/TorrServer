@@ -1,7 +1,7 @@
 package torrsearch
 
 import (
-	 "github.com/paregi12/torrentserver/engine/rutor/models"
+	  "github.com/paregi12/torrentserver/engine/rutor/models"
 )
 
 // Index is an inverted Index. It maps tokens to document IDs.

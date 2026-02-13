@@ -1,4 +1,4 @@
-package server
+package engine
 
 import (
 	"net"
@@ -6,11 +6,11 @@ import (
 	"path/filepath"
 	"strconv"
 
-	 "github.com/paregi12/torrentserver/engine/tgbot"
+	  "github.com/paregi12/torrentserver/engine/tgbot"
 
-	 "github.com/paregi12/torrentserver/engine/log"
-	 "github.com/paregi12/torrentserver/engine/settings"
-	 "github.com/paregi12/torrentserver/engine/web"
+	  "github.com/paregi12/torrentserver/engine/log"
+	  "github.com/paregi12/torrentserver/engine/settings"
+	  "github.com/paregi12/torrentserver/engine/web"
 )
 
 func Start() int {

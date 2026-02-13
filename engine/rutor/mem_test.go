@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	 "github.com/paregi12/torrentserver/engine/rutor/models"
+	  "github.com/paregi12/torrentserver/engine/rutor/models"
 )
 
 func TestParseChannel(t *testing.T) {
