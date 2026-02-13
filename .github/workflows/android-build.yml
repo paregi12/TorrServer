@@ -31,15 +31,18 @@ jobs:
       - name: Install gomobile
         run: |
           go install golang.org/x/mobile/cmd/gomobile@latest
+          go install golang.org/x/mobile/cmd/gobind@latest
           gomobile init
 
       - name: Build AAR
         run: |
           # Set NDK path for gomobile
           export ANDROID_NDK_HOME=$ANDROID_HOME/ndk/26.1.10909125
-          # Ensure dependencies are tidy
+          # Fix dependencies
           go mod tidy
           cd server && go mod tidy && cd ..
+          # Ensure x/mobile/bind is available
+          go get golang.org/x/mobile/bind
           # Build with API 21+ to match modern NDK support
           gomobile bind -v -target=android -androidapi 21 -o torrentserver.aar ./bindings
 
