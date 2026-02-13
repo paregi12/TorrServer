@@ -3,7 +3,7 @@ package torrstor
 import (
 	"sync"
 
-	"server/torr/storage"
+	"github.com/paregi12/torrentserver/server/torr/storage"
 
 	"github.com/anacrolix/torrent/metainfo"
 	ts "github.com/anacrolix/torrent/storage"

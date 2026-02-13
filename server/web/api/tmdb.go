@@ -5,7 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	sets "server/settings"
+	sets "github.com/paregi12/torrentserver/server/settings"
 )
 
 // tmdbSettings godoc

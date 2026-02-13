@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"server/log"
+	"github.com/paregi12/torrentserver/server/log"
 )
 
 type TorznabConfig struct {
@@ -152,12 +152,12 @@ func SetBTSets(sets *BTSets) {
 
 func SetDefaultConfig() {
 	sets := new(BTSets)
-	sets.CacheSize = 64 * 1024 * 1024 // 64 MB
-	sets.PreloadCache = 50
-	sets.ConnectionsLimit = 25
+	sets.CacheSize = 128 * 1024 * 1024 // 128 MB
+	sets.PreloadCache = 15
+	sets.ConnectionsLimit = 150
 	sets.RetrackersMode = 1
 	sets.TorrentDisconnectTimeout = 30
-	sets.ReaderReadAHead = 95 // 95%
+	sets.ReaderReadAHead = 100 // 100%
 	sets.ResponsiveMode = true
 	sets.ShowFSActiveTorr = true
 	sets.StoreSettingsInJson = true

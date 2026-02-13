@@ -4,9 +4,9 @@ import (
 	"io/fs"
 	"time"
 
-	sets "server/settings"
-	"server/torr"
-	"server/torr/storage/torrstor"
+	sets "github.com/paregi12/torrentserver/server/settings"
+	"github.com/paregi12/torrentserver/server/torr"
+	"github.com/paregi12/torrentserver/server/torr/storage/torrstor"
 
 	"github.com/anacrolix/torrent"
 )

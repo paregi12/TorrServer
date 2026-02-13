@@ -7,9 +7,9 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"server/rutor/models"
-	sets "server/settings"
-	"server/torznab"
+	"github.com/paregi12/torrentserver/server/rutor/models"
+	sets "github.com/paregi12/torrentserver/server/settings"
+	"github.com/paregi12/torrentserver/server/torznab"
 )
 
 // torznabSearch godoc

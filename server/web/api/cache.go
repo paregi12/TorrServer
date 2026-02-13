@@ -3,7 +3,7 @@ package api
 import (
 	"net/http"
 
-	"server/torr"
+	"github.com/paregi12/torrentserver/server/torr"
 
 	"github.com/gin-gonic/gin"
 	"github.com/pkg/errors"

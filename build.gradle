@@ -1,0 +1,34 @@
+apply plugin: 'maven-publish'
+
+group = 'com.nuvio'
+version = '1.0.1'
+
+publishing {
+    publications {
+        aar(MavenPublication) {
+            artifactId = 'torrentserver-nuvio'
+            artifact("./build/$version/torrserver.aar") 
+        }
+    }
+
+    repositories {
+        maven {
+            url = uri("${project.buildDir}/repo")
+        }
+    }
+}
+
+
+tasks.register("assemble") {
+    group = "Custom"
+    description = "Builds the project and copies the .aar file"
+    doLast {
+        println("Building the project...")
+    }
+    finalizedBy("copyAarToVersionDir")
+}
+
+tasks.register("copyAarToVersionDir",Copy) {
+    from("torrserver.aar")
+    into("$buildDir/$version")
+}

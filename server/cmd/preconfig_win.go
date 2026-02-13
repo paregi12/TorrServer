@@ -8,8 +8,8 @@ import (
 	"syscall"
 	"time"
 
-	"server/torr"
-	"server/torr/state"
+	"github.com/paregi12/torrentserver/server/torr"
+	"github.com/paregi12/torrentserver/server/torr/state"
 )
 
 const (

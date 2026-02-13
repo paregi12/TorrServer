@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"net/url"
 	"runtime"
-	"server/torrshash"
+	"github.com/paregi12/torrentserver/server/torrshash"
 	"strings"
 	"time"
 

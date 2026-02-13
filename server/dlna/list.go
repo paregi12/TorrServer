@@ -12,11 +12,11 @@ import (
 	"github.com/anacrolix/dms/dlna"
 	"github.com/anacrolix/dms/upnpav"
 
-	"server/log"
-	mt "server/mimetype"
-	"server/settings"
-	"server/torr"
-	"server/torr/state"
+	"github.com/paregi12/torrentserver/server/log"
+	mt "github.com/paregi12/torrentserver/server/mimetype"
+	"github.com/paregi12/torrentserver/server/settings"
+	"github.com/paregi12/torrentserver/server/torr"
+	"github.com/paregi12/torrentserver/server/torr/state"
 )
 
 func getRoot() (ret []interface{}) {

@@ -10,7 +10,7 @@ import (
 	"strings"
 	"sync"
 
-	"server/log"
+	"github.com/paregi12/torrentserver/server/log"
 )
 
 type JsonDB struct {

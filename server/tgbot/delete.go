@@ -2,7 +2,7 @@ package tgbot
 
 import (
 	tele "gopkg.in/telebot.v4"
-	"server/torr"
+	"github.com/paregi12/torrentserver/server/torr"
 )
 
 func deleteTorrent(c tele.Context) {

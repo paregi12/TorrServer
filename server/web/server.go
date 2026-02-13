@@ -5,28 +5,28 @@ import (
 	"os"
 	"sort"
 
-	"server/torrfs/fuse"
-	"server/torrfs/webdav"
+	"github.com/paregi12/torrentserver/server/torrfs/fuse"
+	"github.com/paregi12/torrentserver/server/torrfs/webdav"
 
-	"server/rutor"
+	"github.com/paregi12/torrentserver/server/rutor"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/location/v2"
 	"github.com/gin-gonic/gin"
 	"github.com/wlynxg/anet"
 
-	"server/dlna"
-	"server/settings"
-	"server/web/msx"
+	"github.com/paregi12/torrentserver/server/dlna"
+	"github.com/paregi12/torrentserver/server/settings"
+	"github.com/paregi12/torrentserver/server/web/msx"
 
-	"server/log"
-	"server/torr"
-	"server/version"
-	"server/web/api"
-	"server/web/auth"
-	"server/web/blocker"
-	"server/web/pages"
-	"server/web/sslcerts"
+	"github.com/paregi12/torrentserver/server/log"
+	"github.com/paregi12/torrentserver/server/torr"
+	"github.com/paregi12/torrentserver/server/version"
+	"github.com/paregi12/torrentserver/server/web/api"
+	"github.com/paregi12/torrentserver/server/web/auth"
+	"github.com/paregi12/torrentserver/server/web/blocker"
+	"github.com/paregi12/torrentserver/server/web/pages"
+	"github.com/paregi12/torrentserver/server/web/sslcerts"
 
 	swaggerFiles "github.com/swaggo/files"     // swagger embed files
 	ginSwagger "github.com/swaggo/gin-swagger" // gin-swagger middleware
@@ -49,7 +49,7 @@ var (
 
 // @externalDocs.description	OpenAPI
 // @externalDocs.url			https://swagger.io/resources/open-api/
-func Start() {
+func Start() bool {
 	log.TLogln("Start TorrServer " + version.Version + " torrent " + version.GetTorrentVersion())
 	ips := GetLocalIps()
 	if len(ips) > 0 {
@@ -58,7 +58,7 @@ func Start() {
 	err := BTS.Connect()
 	if err != nil {
 		log.TLogln("BTS.Connect() error!", err) // waitChan <- err
-		os.Exit(1)                              // return
+		return false
 	}
 	rutor.Start()
 
@@ -122,6 +122,7 @@ func Start() {
 		log.TLogln("Start http server at", settings.IP+":"+settings.Port)
 		waitChan <- route.Run(settings.IP + ":" + settings.Port)
 	}()
+	return true
 }
 
 func Wait() error {

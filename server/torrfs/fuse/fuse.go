@@ -14,9 +14,9 @@ import (
 	"syscall"
 	"time"
 
-	"server/log"
-	"server/settings"
-	torrfs "server/torrfs"
+	"github.com/paregi12/torrentserver/server/log"
+	"github.com/paregi12/torrentserver/server/settings"
+	torrfs "github.com/paregi12/torrentserver/server/torrfs"
 
 	gofusefs "github.com/hanwen/go-fuse/v2/fs"
 	"github.com/hanwen/go-fuse/v2/fuse"

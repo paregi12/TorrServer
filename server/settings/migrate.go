@@ -9,8 +9,8 @@ import (
 	"reflect"
 	"time"
 
-	"server/log"
-	"server/web/api/utils"
+	"github.com/paregi12/torrentserver/server/log"
+	"github.com/paregi12/torrentserver/server/web/api/utils"
 
 	bolt "go.etcd.io/bbolt"
 )

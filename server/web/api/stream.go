@@ -3,15 +3,15 @@ package api
 import (
 	"net/http"
 	"net/url"
-	"server/log"
-	"server/torrshash"
+	"github.com/paregi12/torrentserver/server/log"
+	"github.com/paregi12/torrentserver/server/torrshash"
 	"strconv"
 	"strings"
 
-	"server/torr"
-	"server/torr/state"
-	utils2 "server/utils"
-	"server/web/api/utils"
+	"github.com/paregi12/torrentserver/server/torr"
+	"github.com/paregi12/torrentserver/server/torr/state"
+	utils2 "github.com/paregi12/torrentserver/server/utils"
+	"github.com/paregi12/torrentserver/server/web/api/utils"
 
 	"github.com/anacrolix/torrent"
 	"github.com/gin-gonic/gin"

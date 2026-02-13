@@ -4,9 +4,9 @@ import (
 	"io/fs"
 	"time"
 
-	"server/settings"
+	"github.com/paregi12/torrentserver/server/settings"
 
-	"server/torr"
+	"github.com/paregi12/torrentserver/server/torr"
 )
 
 type CategoryDir struct {

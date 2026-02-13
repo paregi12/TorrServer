@@ -3,10 +3,10 @@ package api
 import (
 	"net/http"
 
-	"server/log"
-	set "server/settings"
-	"server/torr"
-	"server/web/api/utils"
+	"github.com/paregi12/torrentserver/server/log"
+	set "github.com/paregi12/torrentserver/server/settings"
+	"github.com/paregi12/torrentserver/server/torr"
+	"github.com/paregi12/torrentserver/server/web/api/utils"
 
 	"github.com/gin-gonic/gin"
 )

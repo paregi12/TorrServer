@@ -1,8 +1,8 @@
 package api
 
 import (
-	config "server/settings"
-	"server/web/auth"
+	config "github.com/paregi12/torrentserver/server/settings"
+	"github.com/paregi12/torrentserver/server/web/auth"
 
 	"github.com/gin-gonic/gin"
 )

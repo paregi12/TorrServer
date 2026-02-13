@@ -10,8 +10,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"server/log"
-	"server/settings"
+	"github.com/paregi12/torrentserver/server/log"
+	"github.com/paregi12/torrentserver/server/settings"
 
 	"github.com/gin-gonic/gin"
 )

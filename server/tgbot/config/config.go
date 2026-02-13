@@ -5,8 +5,8 @@ import (
 	"os"
 	"path/filepath"
 
-	"server/log"
-	"server/settings"
+	"github.com/paregi12/torrentserver/server/log"
+	"github.com/paregi12/torrentserver/server/settings"
 )
 
 type Config struct {

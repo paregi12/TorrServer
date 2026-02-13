@@ -12,17 +12,17 @@ import (
 	"sync"
 	"time"
 
-	"server/torr/utils"
+	"github.com/paregi12/torrentserver/server/torr/utils"
 
 	"github.com/alexflint/go-arg"
 	"github.com/pkg/browser"
 
 	"server"
-	"server/docs"
-	"server/log"
-	"server/settings"
-	"server/torr"
-	"server/version"
+	"github.com/paregi12/torrentserver/server/docs"
+	"github.com/paregi12/torrentserver/server/log"
+	"github.com/paregi12/torrentserver/server/settings"
+	"github.com/paregi12/torrentserver/server/torr"
+	"github.com/paregi12/torrentserver/server/version"
 )
 
 type args struct {

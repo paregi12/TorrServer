@@ -15,10 +15,10 @@ import (
 	"github.com/anacrolix/torrent/metainfo"
 	"github.com/wlynxg/anet"
 
-	"server/settings"
-	"server/torr/storage/torrstor"
-	"server/torr/utils"
-	"server/version"
+	"github.com/paregi12/torrentserver/server/settings"
+	"github.com/paregi12/torrentserver/server/torr/storage/torrstor"
+	"github.com/paregi12/torrentserver/server/torr/utils"
+	"github.com/paregi12/torrentserver/server/version"
 )
 
 type BTServer struct {

@@ -9,11 +9,11 @@ import (
 	"github.com/dustin/go-humanize"
 	tele "gopkg.in/telebot.v4"
 
-	"server/log"
-	"server/settings"
-	"server/tgbot/config"
-	"server/torr"
-	"server/web"
+	"github.com/paregi12/torrentserver/server/log"
+	"github.com/paregi12/torrentserver/server/settings"
+	"github.com/paregi12/torrentserver/server/tgbot/config"
+	"github.com/paregi12/torrentserver/server/torr"
+	"github.com/paregi12/torrentserver/server/web"
 )
 
 func files(c tele.Context) error {

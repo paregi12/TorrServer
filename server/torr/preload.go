@@ -7,12 +7,12 @@ import (
 	"sync"
 	"time"
 
-	"server/ffprobe"
+	"github.com/paregi12/torrentserver/server/ffprobe"
 
-	"server/log"
-	"server/settings"
-	"server/torr/state"
-	utils2 "server/utils"
+	"github.com/paregi12/torrentserver/server/log"
+	"github.com/paregi12/torrentserver/server/settings"
+	"github.com/paregi12/torrentserver/server/torr/state"
+	utils2 "github.com/paregi12/torrentserver/server/utils"
 
 	"github.com/anacrolix/torrent"
 )

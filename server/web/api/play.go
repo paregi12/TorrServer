@@ -7,9 +7,9 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"server/torr"
-	"server/torr/state"
-	"server/web/api/utils"
+	"github.com/paregi12/torrentserver/server/torr"
+	"github.com/paregi12/torrentserver/server/torr/state"
+	"github.com/paregi12/torrentserver/server/web/api/utils"
 )
 
 // play godoc

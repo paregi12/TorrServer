@@ -4,7 +4,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"server/torr/state"
+	"github.com/paregi12/torrentserver/server/torr/state"
 )
 
 var extVideo = map[string]interface{}{

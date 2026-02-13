@@ -10,8 +10,8 @@ import (
 	"github.com/anacrolix/torrent"
 	"github.com/anacrolix/torrent/metainfo"
 
-	"server/log"
-	sets "server/settings"
+	"github.com/paregi12/torrentserver/server/log"
+	sets "github.com/paregi12/torrentserver/server/settings"
 )
 
 var bts *BTServer

@@ -9,10 +9,10 @@ import (
 
 	"github.com/anacrolix/torrent"
 
-	"server/log"
-	"server/settings"
-	"server/torr/storage/state"
-	"server/torr/utils"
+	"github.com/paregi12/torrentserver/server/log"
+	"github.com/paregi12/torrentserver/server/settings"
+	"github.com/paregi12/torrentserver/server/torr/storage/state"
+	"github.com/paregi12/torrentserver/server/torr/utils"
 
 	"github.com/anacrolix/torrent/metainfo"
 	"github.com/anacrolix/torrent/storage"

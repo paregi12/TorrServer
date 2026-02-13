@@ -7,8 +7,8 @@ import (
 
 	"github.com/anacrolix/torrent"
 
-	"server/log"
-	"server/settings"
+	"github.com/paregi12/torrentserver/server/log"
+	"github.com/paregi12/torrentserver/server/settings"
 )
 
 type Reader struct {

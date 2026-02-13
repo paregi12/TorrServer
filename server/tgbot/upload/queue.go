@@ -7,7 +7,7 @@ import (
 
 	"github.com/dustin/go-humanize"
 	tele "gopkg.in/telebot.v4"
-	"server/torr"
+	"github.com/paregi12/torrentserver/server/torr"
 )
 
 type DLQueue struct {

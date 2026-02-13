@@ -3,15 +3,15 @@ package api
 import (
 	"net/http"
 
-	"server/rutor"
+	"github.com/paregi12/torrentserver/server/rutor"
 
-	"server/dlna"
+	"github.com/paregi12/torrentserver/server/dlna"
 
 	"github.com/gin-gonic/gin"
 	"github.com/pkg/errors"
 
-	sets "server/settings"
-	"server/torr"
+	sets "github.com/paregi12/torrentserver/server/settings"
+	"github.com/paregi12/torrentserver/server/torr"
 )
 
 // Action: get, set, def

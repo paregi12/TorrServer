@@ -6,8 +6,8 @@ import (
 	"strings"
 	"time"
 
-	"server/settings"
-	"server/torr"
+	"github.com/paregi12/torrentserver/server/settings"
+	"github.com/paregi12/torrentserver/server/torr"
 )
 
 type TorrDir struct {

@@ -15,8 +15,8 @@ import (
 	"github.com/anacrolix/log"
 	"github.com/wlynxg/anet"
 
-	"server/settings"
-	"server/web/pages/template"
+	"github.com/paregi12/torrentserver/server/settings"
+	"github.com/paregi12/torrentserver/server/web/pages/template"
 )
 
 var dmsServer *dms.Server
@@ -24,7 +24,7 @@ var dmsServer *dms.Server
 func Start() {
 	logger := log.Default.WithNames("dlna")
 	dmsServer = &dms.Server{
-		Logger: logger.WithNames("dms", "server"),
+		Logger: logger.WithNames("dms", "github.com/paregi12/torrentserver/server"),
 		Interfaces: func() (ifs []net.Interface) {
 			var err error
 			ifaces, err := anet.Interfaces()

@@ -5,7 +5,7 @@ import (
 	"strings"
 	"time"
 
-	"server/log"
+	"github.com/paregi12/torrentserver/server/log"
 
 	bolt "go.etcd.io/bbolt"
 )

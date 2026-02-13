@@ -1,4 +1,4 @@
-module server
+module github.com/paregi12/torrentserver/server
 
 go 1.24.0
 

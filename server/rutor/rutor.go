@@ -14,12 +14,12 @@ import (
 
 	"github.com/agnivade/levenshtein"
 
-	"server/log"
-	"server/rutor/models"
-	"server/rutor/torrsearch"
-	"server/rutor/utils"
-	"server/settings"
-	utils2 "server/torr/utils"
+	"github.com/paregi12/torrentserver/server/log"
+	"github.com/paregi12/torrentserver/server/rutor/models"
+	"github.com/paregi12/torrentserver/server/rutor/torrsearch"
+	"github.com/paregi12/torrentserver/server/rutor/utils"
+	"github.com/paregi12/torrentserver/server/settings"
+	utils2 "github.com/paregi12/torrentserver/server/torr/utils"
 )
 
 var (

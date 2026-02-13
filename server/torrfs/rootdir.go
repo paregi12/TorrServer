@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"server/torr"
+	"github.com/paregi12/torrentserver/server/torr"
 )
 
 type RootDir struct {

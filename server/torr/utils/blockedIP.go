@@ -6,9 +6,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	"server/log"
+	"github.com/paregi12/torrentserver/server/log"
 
-	"server/settings"
+	"github.com/paregi12/torrentserver/server/settings"
 
 	"github.com/anacrolix/torrent/iplist"
 )

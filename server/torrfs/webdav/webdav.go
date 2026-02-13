@@ -10,9 +10,9 @@ import (
 	"sync"
 	"time"
 
-	"server/log"
+	"github.com/paregi12/torrentserver/server/log"
 
-	"server/torrfs"
+	"github.com/paregi12/torrentserver/server/torrfs"
 
 	"github.com/gin-gonic/gin"
 	"golang.org/x/net/webdav"

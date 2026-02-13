@@ -6,47 +6,16 @@ import (
 	"path/filepath"
 	"strconv"
 
-	"server/tgbot"
+	"github.com/paregi12/torrentserver/server/tgbot"
 
-	"server/log"
-	"server/settings"
-	"server/web"
+	"github.com/paregi12/torrentserver/server/log"
+	"github.com/paregi12/torrentserver/server/settings"
+	"github.com/paregi12/torrentserver/server/web"
 )
 
-func Start() {
-	settings.InitSets(settings.Args.RDB, settings.Args.SearchWA)
-	// https checks
-	if settings.Args.Ssl {
-		// set settings ssl enabled
-		settings.Ssl = settings.Args.Ssl
-		if settings.Args.SslPort == "" {
-			dbSSlPort := strconv.Itoa(settings.BTsets.SslPort)
-			if dbSSlPort != "0" {
-				settings.Args.SslPort = dbSSlPort
-			} else {
-				settings.Args.SslPort = "8091"
-			}
-		} else { // store ssl port from params to DB
-			dbSSlPort, err := strconv.Atoi(settings.Args.SslPort)
-			if err == nil {
-				settings.BTsets.SslPort = dbSSlPort
-			}
-		}
-		// check if ssl cert and key files exist
-		if settings.Args.SslCert != "" && settings.Args.SslKey != "" {
-			// set settings ssl cert and key files
-			settings.BTsets.SslCert = settings.Args.SslCert
-			settings.BTsets.SslKey = settings.Args.SslKey
-		}
-		log.TLogln("Check web ssl port", settings.Args.SslPort)
-		l, err := net.Listen("tcp", settings.Args.IP+":"+settings.Args.SslPort)
-		if l != nil {
-			l.Close()
-		}
-		if err != nil {
-			log.TLogln("Port", settings.Args.SslPort, "already in use! Please set different ssl port for HTTPS. Abort")
-			os.Exit(1)
-		}
+func Start() int {
+	if !settings.InitSets(settings.Args.RDB, settings.Args.SearchWA) {
+		return -1
 	}
 	// http checks
 	if settings.Args.Port == "" {
@@ -60,8 +29,11 @@ func Start() {
 	}
 	if err != nil {
 		log.TLogln("Port", settings.Args.Port, "already in use! Please set different port for HTTP. Abort")
-		os.Exit(1)
+		return -1
 	}
+	realPort := l.Addr().(*net.TCPAddr).Port
+	settings.Args.Port = strconv.Itoa(realPort)
+
 	// remove old disk caches
 	go cleanCache()
 	// set settings http and https ports. Start web server.
@@ -72,7 +44,11 @@ func Start() {
 	if settings.Args.TGToken != "" {
 		tgbot.Start(settings.Args.TGToken)
 	}
-	web.Start()
+	if web.Start() {
+		return realPort
+	} else {
+		return -1
+	}
 }
 
 func cleanCache() {

@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"sync"
 
-	"server/log"
+	"github.com/paregi12/torrentserver/server/log"
 )
 
 // Add a global lock for database operations during migration
@@ -37,20 +37,20 @@ var (
 	MaxSize  int64
 )
 
-func InitSets(readOnly, searchWA bool) {
+func InitSets(readOnly, searchWA bool) bool {
 	ReadOnly = readOnly
 	SearchWA = searchWA
 
 	bboltDB := NewTDB()
 	if bboltDB == nil {
 		log.TLogln("Error open bboltDB:", filepath.Join(Path, "config.db"))
-		os.Exit(1)
+		return false
 	}
 
 	jsonDB := NewJsonDB()
 	if jsonDB == nil {
 		log.TLogln("Error open jsonDB")
-		os.Exit(1)
+		return false
 	}
 
 	// Optional forced migration (for manual control)
@@ -84,6 +84,7 @@ func InitSets(readOnly, searchWA bool) {
 	MigrateTorrents()
 
 	logConfiguration(settingsStoragePref, viewedStoragePref)
+	return true
 }
 
 func determineStoragePreferences(bboltDB, jsonDB TorrServerDB) (settingsInJson, viewedInJson bool) {

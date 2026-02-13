@@ -6,7 +6,7 @@ import (
 	"sort"
 	"strings"
 
-	"server/log"
+	"github.com/paregi12/torrentserver/server/log"
 
 	"golang.org/x/exp/slices"
 )

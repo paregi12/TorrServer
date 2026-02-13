@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"server/settings"
+	"github.com/paregi12/torrentserver/server/settings"
 
 	"github.com/anacrolix/torrent"
 	"github.com/anacrolix/torrent/metainfo"
@@ -57,6 +57,10 @@ func GetDefTrackers() []string {
 		return defTrackers
 	}
 	return loadedTrackers
+}
+
+func SetDefTrackers(trackers []string) {
+	loadedTrackers = trackers
 }
 
 func loadNewTracker() {

@@ -15,8 +15,8 @@ import (
 	"path/filepath"
 	"time"
 
-	"server/log"
-	"server/settings"
+	"github.com/paregi12/torrentserver/server/log"
+	"github.com/paregi12/torrentserver/server/settings"
 )
 
 func generateSelfSignedCert(ips []string) ([]byte, []byte, error) {

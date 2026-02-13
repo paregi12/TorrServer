@@ -4,7 +4,7 @@ import (
 	"io/fs"
 	"strings"
 
-	"server/torr"
+	"github.com/paregi12/torrentserver/server/torr"
 )
 
 type INode interface {

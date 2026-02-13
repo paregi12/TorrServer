@@ -9,11 +9,11 @@ import (
 	"strconv"
 	"strings"
 
-	"server/settings"
-	"server/torr"
-	"server/utils"
-	"server/version"
-	"server/web/auth"
+	"github.com/paregi12/torrentserver/server/settings"
+	"github.com/paregi12/torrentserver/server/torr"
+	"github.com/paregi12/torrentserver/server/utils"
+	"github.com/paregi12/torrentserver/server/version"
+	"github.com/paregi12/torrentserver/server/web/auth"
 
 	"github.com/gin-gonic/gin"
 )
