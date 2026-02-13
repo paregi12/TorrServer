@@ -14,7 +14,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: '1.25.0' 
+          go-version: '1.23.6' 
           cache-dependency-path: go.sum
 
       - name: Clean Go Cache
@@ -47,7 +47,7 @@ jobs:
           # FORCEFULLY CREATE THE CORRECT GO.MOD
           echo "module github.com/paregi12/torrentserver" > go.mod
           echo "" >> go.mod
-          echo "go 1.25.0" >> go.mod
+          echo "go 1.23.6" >> go.mod
           echo "" >> go.mod
           echo "replace (" >> go.mod
           echo "	github.com/anacrolix/torrent v1.59.1 => github.com/tsynik/torrent v1.2.22" >> go.mod
@@ -55,8 +55,9 @@ jobs:
           echo "	github.com/wlynxg/anet => ./anet-dummy" >> go.mod
           echo ")" >> go.mod
           
-          # Tidy up
+          # Tidy up dependencies and ensure we have mobile/bind
           go mod tidy
+          go get golang.org/x/mobile/bind
           
           # Ensure anet is physically blocked from linking
           find . -name "anet" -type d -exec rm -rf {} + || true
