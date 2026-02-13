@@ -10,7 +10,7 @@ import (
 	"github.com/paregi12/torrentserver/server/rutor"
 
 	"github.com/gin-contrib/cors"
-	"github.com/gin-contrib/location/v2"
+	"github.com/gin-contrib/location"
 	"github.com/gin-gonic/gin"
 
 	"github.com/paregi12/torrentserver/server/dlna"
