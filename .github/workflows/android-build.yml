@@ -43,13 +43,18 @@ jobs:
         run: |
           # Set NDK path for gomobile
           export ANDROID_NDK_HOME=$ANDROID_HOME/ndk/26.1.10909125
-          # Force refresh dependencies to remove anet
-          rm -f go.sum
-          cd server && rm -f go.sum && go mod tidy && cd ..
-          go mod tidy
+          
+          # Create vendor directory to see exactly what we are building
+          cd server && go mod vendor && cd ..
+          go mod vendor
+          
+          # PHYSICALLY WIPE anet from vendor if it exists anywhere
+          find . -type d -name "anet" -exec rm -rf {} + || true
+          
           # Ensure x/mobile/bind is available
           go get golang.org/x/mobile/bind
-          # Build with API 21+ to match modern NDK support
+          
+          # Build with API 21+ using vendor directory to ignore outside modules
           gomobile bind -v -target=android -androidapi 21 -o torrentserver.aar ./bindings
 
       - name: Upload Artifact
