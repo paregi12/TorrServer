@@ -14,7 +14,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: '1.21' 
+          go-version: '1.22.7' 
           cache-dependency-path: go.sum
 
       - name: Clean Go Cache
@@ -41,20 +41,19 @@ jobs:
 
       - name: Build AAR
         run: |
+          # Force Go to use the exact local toolchain
+          export GOTOOLCHAIN=local
           # Set NDK path for gomobile
           export ANDROID_NDK_HOME=$ANDROID_HOME/ndk/26.1.10909125
           
-          # Create vendor directory to see exactly what we are building
-          cd server && go mod vendor && cd ..
-          go mod vendor
-          
-          # PHYSICALLY WIPE anet from vendor if it exists anywhere
-          find . -type d -name "anet" -exec rm -rf {} + || true
+          # Tidy dependencies
+          cd server && go mod tidy && cd ..
+          go mod tidy
           
           # Ensure x/mobile/bind is available
           go get golang.org/x/mobile/bind
           
-          # Build with API 21+ using vendor directory to ignore outside modules
+          # Build with API 21+ 
           gomobile bind -v -target=android -androidapi 21 -o torrentserver.aar ./bindings
 
       - name: Upload Artifact
