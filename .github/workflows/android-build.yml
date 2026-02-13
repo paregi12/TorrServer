@@ -68,7 +68,9 @@ jobs:
           # Compress native libraries with UPX
           mkdir -p tmp_aar
           unzip torrentserver.aar -d tmp_aar
-          find tmp_aar -name "*.so" -exec upx --best {} +
+          # Fix UPX permissions and use Android-specific compression flag
+          find tmp_aar -name "*.so" -exec chmod +x {} +
+          find tmp_aar -name "*.so" -exec upx --best --android-shlib {} +
           cd tmp_aar && zip -r ../torrentserver_upx.aar . && cd ..
           mv torrentserver_upx.aar torrentserver.aar
           rm -rf tmp_aar
