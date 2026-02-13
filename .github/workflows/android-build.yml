@@ -62,8 +62,11 @@ jobs:
           # Ensure anet is physically blocked from linking
           find . -name "anet" -type d -exec rm -rf {} + || true
           
-          # Build with API 21+ 
-          gomobile bind -v -target=android -androidapi 21 -o torrentserver.aar ./bindings
+          # SHRINK: Remove heavy splash images from the Go source to reduce binary size
+          rm -f engine/web/pages/template/pages/apple-splash-*.jpg
+          
+          # Build with API 21+ and optimization flags to reduce size (-s -w strips debug symbols)
+          gomobile bind -v -target=android -androidapi 21 -ldflags="-s -w" -o torrentserver.aar ./bindings
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
