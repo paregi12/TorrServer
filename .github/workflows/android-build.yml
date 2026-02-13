@@ -2,7 +2,7 @@ name: Build Android Library
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
@@ -14,8 +14,8 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: '1.24'
-          cache-dependency-path: server/go.sum
+          go-version: '1.25' # gomobile requires 1.25+ for latest versions
+          cache-dependency-path: go.sum
 
       - name: Set up JDK
         uses: actions/setup-java@v4
@@ -23,8 +23,10 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Setup Android NDK
+      - name: Setup Android SDK & NDK
         uses: android-actions/setup-android@v3
+        with:
+          packages: "ndk;26.1.10909125" # Stable NDK version for Go
 
       - name: Install gomobile
         run: |
@@ -33,11 +35,13 @@ jobs:
 
       - name: Build AAR
         run: |
-          cd server
-          gomobile bind -v -target=android -o torrentserver.aar ./mobile
+          # Set NDK path for gomobile
+          export ANDROID_NDK_HOME=$ANDROID_HOME/ndk/26.1.10909125
+          # Build with API 21+ to match modern NDK support
+          gomobile bind -v -target=android -androidapi 21 -o torrentserver.aar ./bindings
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: torrentserver-aar
-          path: server/torrentserver.aar
+          path: torrentserver.aar
