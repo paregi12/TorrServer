@@ -55,6 +55,9 @@ jobs:
           echo "	github.com/wlynxg/anet => ./anet-dummy" >> go.mod
           echo ")" >> go.mod
           
+          # Debug: Verify go.mod content
+          cat go.mod
+          
           # Tidy up dependencies and ensure we have mobile/bind
           go mod tidy
           go get golang.org/x/mobile/bind
