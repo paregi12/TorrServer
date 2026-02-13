@@ -18,7 +18,7 @@ require (
 	github.com/anacrolix/torrent v1.59.1
 	github.com/dustin/go-humanize v1.0.1
 	github.com/gin-contrib/cors v1.7.6
-	github.com/gin-contrib/location/v2 v2.0.0
+	github.com/gin-contrib/location/v2 v1.0.1
 	github.com/gin-gonic/gin v1.11.0
 	github.com/hanwen/go-fuse/v2 v2.9.0
 	github.com/kljensen/snowball v0.10.0
