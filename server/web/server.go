@@ -2,7 +2,6 @@ package web
 
 import (
 	"net"
-	"os"
 	"sort"
 
 	"github.com/paregi12/torrentserver/server/torrfs/fuse"
