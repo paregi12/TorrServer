@@ -41,14 +41,23 @@ jobs:
 
       - name: Build AAR
         run: |
-          # Force Go to use the exact local toolchain
-          export GOTOOLCHAIN=local
           # Set NDK path for gomobile
           export ANDROID_NDK_HOME=$ANDROID_HOME/ndk/26.1.10909125
           
-          # Tidy dependencies
-          cd server && go mod tidy && cd ..
-          go mod tidy
+          # Force a clean vendor directory
+          rm -rf vendor
+          cd server && go mod tidy && go mod vendor && cd ..
+          go mod tidy && go mod vendor
+          
+          # PHYSICALLY REPLACE anet in vendor with our dummy code
+          # This is the only way to be 100% sure it never links
+          ANET_DIR="server/vendor/github.com/wlynxg/anet"
+          if [ -d "$ANET_DIR" ]; then
+            echo "Neutralizing anet in vendor..."
+            rm -rf "$ANET_DIR"/*
+            cp server/anet-dummy/anet.go "$ANET_DIR/"
+            echo "package anet" > "$ANET_DIR/go.mod"
+          fi
           
           # Ensure x/mobile/bind is available
           go get golang.org/x/mobile/bind
