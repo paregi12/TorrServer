@@ -12,7 +12,6 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/location/v2"
 	"github.com/gin-gonic/gin"
-	"github.com/wlynxg/anet"
 
 	"github.com/paregi12/torrentserver/server/dlna"
 	"github.com/paregi12/torrentserver/server/settings"
@@ -151,14 +150,14 @@ func echo(c *gin.Context) {
 }
 
 func GetLocalIps() []string {
-	ifaces, err := anet.Interfaces()
+	ifaces, err := net.Interfaces()
 	if err != nil {
 		log.TLogln("Error get local IPs")
 		return nil
 	}
 	var list []string
 	for _, i := range ifaces {
-		addrs, _ := anet.InterfaceAddrsByInterface(&i)
+		addrs, _ := i.Addrs()
 		if i.Flags&net.FlagUp == net.FlagUp {
 			for _, addr := range addrs {
 				var ip net.IP
