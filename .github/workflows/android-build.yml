@@ -14,7 +14,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: '1.25' # gomobile requires 1.25+ for latest versions
+          go-version: '1.23' # Go 1.24 is incompatible with anet's internal links
           cache-dependency-path: go.sum
 
       - name: Set up JDK
