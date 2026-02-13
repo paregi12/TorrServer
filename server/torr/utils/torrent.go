@@ -118,10 +118,9 @@ func OpenTorrentFile(path string) (*torrent.TorrentSpec, error) {
 
 	// mag := minfo.Magnet(info.Name, minfo.HashInfoBytes())
 	mag := minfo.Magnet(nil, &info)
-	return &torrent.TorrentSpec{
-		InfoBytes:   minfo.InfoBytes,
-		Trackers:    [][]string{mag.Trackers},
-		DisplayName: info.Name,
-		InfoHash:    minfo.HashInfoBytes(),
-	}, nil
+	spec := new(torrent.TorrentSpec)
+	spec.Trackers = [][]string{mag.Trackers}
+	spec.DisplayName = info.Name
+	spec.InfoHash = minfo.HashInfoBytes()
+	return spec, nil
 }

@@ -27,12 +27,11 @@ func ParseFile(file multipart.File) (*torrent.TorrentSpec, error) {
 
 	// mag := minfo.Magnet(info.Name, minfo.HashInfoBytes())
 	mag := minfo.Magnet(nil, &info)
-	return &torrent.TorrentSpec{
-		InfoBytes:   minfo.InfoBytes,
-		Trackers:    [][]string{mag.Trackers},
-		DisplayName: info.Name,
-		InfoHash:    minfo.HashInfoBytes(),
-	}, nil
+	spec := new(torrent.TorrentSpec)
+	spec.Trackers = [][]string{mag.Trackers}
+	spec.DisplayName = info.Name
+	spec.InfoHash = minfo.HashInfoBytes()
+	return spec, nil
 }
 
 func ParseLink(link string) (*torrent.TorrentSpec, error) {
@@ -67,12 +66,11 @@ func fromMagnet(link string) (*torrent.TorrentSpec, error) {
 		trackers = [][]string{mag.Trackers}
 	}
 
-	return &torrent.TorrentSpec{
-		InfoBytes:   nil,
-		Trackers:    trackers,
-		DisplayName: mag.DisplayName,
-		InfoHash:    mag.InfoHash,
-	}, nil
+	spec := new(torrent.TorrentSpec)
+	spec.Trackers = trackers
+	spec.DisplayName = mag.DisplayName
+	spec.InfoHash = mag.InfoHash
+	return spec, nil
 }
 
 func ParseTorrsHash(token string) (*torrent.TorrentSpec, *torrshash.TorrsHash, error) {
@@ -89,12 +87,11 @@ func ParseTorrsHash(token string) (*torrent.TorrentSpec, *torrshash.TorrsHash, e
 		trackers = [][]string{th.Trackers()}
 	}
 
-	return &torrent.TorrentSpec{
-		InfoBytes:   nil,
-		Trackers:    trackers,
-		DisplayName: th.Title(),
-		InfoHash:    metainfo.NewHashFromHex(th.Hash),
-	}, th, nil
+	spec := new(torrent.TorrentSpec)
+	spec.Trackers = trackers
+	spec.DisplayName = th.Title()
+	spec.InfoHash = metainfo.NewHashFromHex(th.Hash)
+	return spec, th, nil
 }
 
 func fromHttp(link string) (*torrent.TorrentSpec, error) {
@@ -132,12 +129,11 @@ func fromHttp(link string) (*torrent.TorrentSpec, error) {
 	// mag := minfo.Magnet(info.Name, minfo.HashInfoBytes())
 	mag := minfo.Magnet(nil, &info)
 
-	return &torrent.TorrentSpec{
-		InfoBytes:   minfo.InfoBytes,
-		Trackers:    [][]string{mag.Trackers},
-		DisplayName: info.Name,
-		InfoHash:    minfo.HashInfoBytes(),
-	}, nil
+	spec := new(torrent.TorrentSpec)
+	spec.Trackers = [][]string{mag.Trackers}
+	spec.DisplayName = info.Name
+	spec.InfoHash = minfo.HashInfoBytes()
+	return spec, nil
 }
 
 func fromFile(path string) (*torrent.TorrentSpec, error) {
@@ -155,10 +151,9 @@ func fromFile(path string) (*torrent.TorrentSpec, error) {
 
 	// mag := minfo.Magnet(info.Name, minfo.HashInfoBytes())
 	mag := minfo.Magnet(nil, &info)
-	return &torrent.TorrentSpec{
-		InfoBytes:   minfo.InfoBytes,
-		Trackers:    [][]string{mag.Trackers},
-		DisplayName: info.Name,
-		InfoHash:    minfo.HashInfoBytes(),
-	}, nil
+	spec := new(torrent.TorrentSpec)
+	spec.Trackers = [][]string{mag.Trackers}
+	spec.DisplayName = info.Name
+	spec.InfoHash = minfo.HashInfoBytes()
+	return spec, nil
 }
