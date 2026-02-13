@@ -44,25 +44,21 @@ jobs:
           # Set NDK path for gomobile
           export ANDROID_NDK_HOME=$ANDROID_HOME/ndk/26.1.10909125
           
-          # Force a clean vendor directory
-          rm -rf vendor
-          cd server && go mod tidy && go mod vendor && cd ..
-          go mod tidy && go mod vendor
+          # Flatten everything into a single vendor directory in the root
+          # This resolves the multi-module confusion
+          go mod tidy
+          go mod vendor
           
-          # PHYSICALLY REPLACE anet in vendor with our dummy code
-          # This is the only way to be 100% sure it never links
-          ANET_DIR="server/vendor/github.com/wlynxg/anet"
-          if [ -d "$ANET_DIR" ]; then
-            echo "Neutralizing anet in vendor..."
-            rm -rf "$ANET_DIR"/*
-            cp server/anet-dummy/anet.go "$ANET_DIR/"
-            echo "package anet" > "$ANET_DIR/go.mod"
-          fi
+          # PHYSICALLY NEUTRALIZE anet in the root vendor folder
+          find vendor -type d -name "anet" -exec rm -rf {} + || true
+          mkdir -p vendor/github.com/wlynxg/anet
+          cp server/anet-dummy/anet.go vendor/github.com/wlynxg/anet/
+          echo "package anet" > vendor/github.com/wlynxg/anet/go.mod
           
           # Ensure x/mobile/bind is available
           go get golang.org/x/mobile/bind
           
-          # Build with API 21+ 
+          # Build using the physically modified vendor directory
           gomobile bind -v -target=android -androidapi 21 -o torrentserver.aar ./bindings
 
       - name: Upload Artifact
