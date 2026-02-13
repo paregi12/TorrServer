@@ -11,8 +11,8 @@ import (
 
 	"server"
 
-	"github.com/paregi12/torrentserver/log"
-	"github.com/paregi12/torrentserver/settings"
+	 "github.com/paregi12/torrentserver/engine/log"
+	 "github.com/paregi12/torrentserver/engine/settings"
 )
 
 func Preconfig(dkill bool) {

@@ -1,9 +1,9 @@
 package nuvioServer
 
 import (
-	"github.com/paregi12/torrentserver"
-	"github.com/paregi12/torrentserver/settings"
-	"github.com/paregi12/torrentserver/torr/utils"
+	"github.com/paregi12/torrentserver/engine"
+	"github.com/paregi12/torrentserver/engine/settings"
+	"github.com/paregi12/torrentserver/engine/torr/utils"
 	"strconv"
 	"strings"
 )
@@ -13,15 +13,15 @@ func StartTorrentServer(pathdb string, port int64) int64 {
 		Path: pathdb,
 		Port: strconv.FormatInt(port, 10),
 	}
-	return int64(server.Start())
+	return int64(engine.Start(pathdb, int(port), false, false))
 }
 
 func WaitTorrentServer() {
-	server.WaitServer()
+	engine.WaitServer()
 }
 
 func StopTorrentServer() {
-	server.Stop()
+	engine.Stop()
 }
 
 func AddTrackers(trackers string) {
