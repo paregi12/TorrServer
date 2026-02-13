@@ -26,7 +26,6 @@ require (
 	github.com/swaggo/files v1.0.1
 	github.com/swaggo/gin-swagger v1.6.1
 	github.com/swaggo/swag v1.16.6
-	github.com/wlynxg/anet v0.0.5
 	go.etcd.io/bbolt v1.4.3
 	golang.org/x/exp v0.0.0-20251125195548-87e1e737ad39
 	golang.org/x/image v0.33.0
