@@ -9,6 +9,7 @@ import (
 )
 
 func StartTorrentServer(pathdb string, port int64) int64 {
+	settings.Path = pathdb
 	settings.Args = &settings.ExecArgs{
 		Path: pathdb,
 		Port: strconv.FormatInt(port, 10),
