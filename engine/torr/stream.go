@@ -110,7 +110,8 @@ func (t *Torrent) Stream(fileID int, req *http.Request, resp http.ResponseWriter
 	})
 
 	// Set response headers
-	resp.Header().Set("Connection", "close")
+	resp.Header().Set("Connection", "keep-alive")
+	resp.Header().Set("X-Content-Type-Options", "nosniff")
 	// Add timeout header if configured
 	if streamTimeout > 0 {
 		resp.Header().Set("X-Stream-Timeout", fmt.Sprintf("%d", streamTimeout))
