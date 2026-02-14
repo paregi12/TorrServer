@@ -79,6 +79,10 @@ func torrents(c *gin.Context) {
 		{
 			wipeTorrents(c)
 		}
+	default:
+		{
+			c.AbortWithError(http.StatusBadRequest, errors.New("unknown action"))
+		}
 	}
 }
 

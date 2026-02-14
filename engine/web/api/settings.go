@@ -43,6 +43,11 @@ func settings(c *gin.Context) {
 		c.JSON(200, sets.BTsets)
 		return
 	} else if req.Action == "set" {
+		if req.Sets == nil {
+			c.AbortWithError(http.StatusBadRequest, errors.New("sets is empty"))
+			return
+		}
+
 		torr.SetSettings(req.Sets)
 		dlna.Stop()
 		if req.Sets.EnableDLNA {
@@ -56,5 +61,5 @@ func settings(c *gin.Context) {
 		c.Status(200)
 		return
 	}
-	c.AbortWithError(http.StatusBadRequest, errors.New("action is empty"))
+	c.AbortWithError(http.StatusBadRequest, errors.New("unknown action"))
 }

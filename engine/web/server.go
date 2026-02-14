@@ -1,36 +1,29 @@
 package web
 
 import (
-
+	"context"
 	"net"
-
+	"net/http"
+	"os"
 	"sort"
-
-
+	"sync"
+	"time"
 
 	"github.com/gin-contrib/cors"
-
 	"github.com/gin-contrib/location"
-
 	"github.com/gin-gonic/gin"
 
-
-
 	"github.com/paregi12/torrentserver/engine/dlna"
-
+	"github.com/paregi12/torrentserver/engine/log"
 	"github.com/paregi12/torrentserver/engine/settings"
-
-
-	     "github.com/paregi12/torrentserver/engine/web/msx"
-
-	     "github.com/paregi12/torrentserver/engine/log"
-	     "github.com/paregi12/torrentserver/engine/torr"
-	     "github.com/paregi12/torrentserver/engine/version"
-	     "github.com/paregi12/torrentserver/engine/web/api"
-	     "github.com/paregi12/torrentserver/engine/web/auth"
-	     "github.com/paregi12/torrentserver/engine/web/blocker"
-	     "github.com/paregi12/torrentserver/engine/web/pages"
-	     "github.com/paregi12/torrentserver/engine/web/sslcerts"
+	"github.com/paregi12/torrentserver/engine/torr"
+	"github.com/paregi12/torrentserver/engine/version"
+	"github.com/paregi12/torrentserver/engine/web/api"
+	"github.com/paregi12/torrentserver/engine/web/auth"
+	"github.com/paregi12/torrentserver/engine/web/blocker"
+	"github.com/paregi12/torrentserver/engine/web/msx"
+	"github.com/paregi12/torrentserver/engine/web/pages"
+	"github.com/paregi12/torrentserver/engine/web/sslcerts"
 
 	swaggerFiles "github.com/swaggo/files"     // swagger embed files
 	ginSwagger "github.com/swaggo/gin-swagger" // gin-swagger middleware
@@ -38,8 +31,19 @@ import (
 
 var (
 	BTS      = torr.NewBTS()
-	waitChan = make(chan error)
+	waitChan = make(chan error, 4)
+
+	serverMu    sync.Mutex
+	httpServer  *http.Server
+	httpsServer *http.Server
 )
+
+func reportWait(err error) {
+	select {
+	case waitChan <- err:
+	default:
+	}
+}
 
 //	@title			Swagger Torrserver API
 //	@version		{version.Version}
@@ -61,19 +65,24 @@ func Start() bool {
 	}
 	err := BTS.Connect()
 	if err != nil {
-		log.TLogln("BTS.Connect() error!", err) // waitChan <- err
+		log.TLogln("BTS.Connect() error!", err)
 		return false
 	}
 
 	gin.SetMode(gin.ReleaseMode)
 
-	// corsCfg := cors.DefaultConfig()
-	// corsCfg.AllowAllOrigins = true
-	// corsCfg.AllowHeaders = []string{"*"}
-	// corsCfg.AllowMethods = []string{"*"}
 	corsCfg := cors.DefaultConfig()
-	corsCfg.AllowAllOrigins = true
-	corsCfg.AllowPrivateNetwork = true
+	allowAllCORS := os.Getenv("TS_ALLOW_ALL_CORS") == "1"
+	if allowAllCORS {
+		corsCfg.AllowAllOrigins = true
+		corsCfg.AllowPrivateNetwork = true
+	} else {
+		// Default to local origins only; set TS_ALLOW_ALL_CORS=1 to restore permissive behavior.
+		corsCfg.AllowOrigins = []string{
+			"http://127.0.0.1",
+			"http://localhost",
+		}
+	}
 	corsCfg.AllowHeaders = []string{"Origin", "Content-Length", "Content-Type", "X-Requested-With", "Accept", "Authorization"}
 
 	route := gin.New()
@@ -92,33 +101,47 @@ func Start() bool {
 
 	route.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
+	serverMu.Lock()
+	defer serverMu.Unlock()
+
 	// check if https enabled
 	if settings.Ssl {
-		// if no cert and key files set in db/settings, generate new self-signed cert and key files
 		if settings.BTsets.SslCert == "" || settings.BTsets.SslKey == "" {
 			settings.BTsets.SslCert, settings.BTsets.SslKey = sslcerts.MakeCertKeyFiles(ips)
 			log.TLogln("Saving path to ssl cert and key in db", settings.BTsets.SslCert, settings.BTsets.SslKey)
 			settings.SetBTSets(settings.BTsets)
 		}
-		// verify if cert and key files are valid
 		err = sslcerts.VerifyCertKeyFiles(settings.BTsets.SslCert, settings.BTsets.SslKey, settings.SslPort)
-		// if not valid, generate new self-signed cert and key files
 		if err != nil {
 			log.TLogln("Error checking certificate and private key files:", err)
 			settings.BTsets.SslCert, settings.BTsets.SslKey = sslcerts.MakeCertKeyFiles(ips)
 			log.TLogln("Saving path to ssl cert and key in db", settings.BTsets.SslCert, settings.BTsets.SslKey)
 			settings.SetBTSets(settings.BTsets)
 		}
-		go func() {
-			log.TLogln("Start https server at", settings.IP+":"+settings.SslPort)
-			waitChan <- route.RunTLS(settings.IP+":"+settings.SslPort, settings.BTsets.SslCert, settings.BTsets.SslKey)
-		}()
+
+		httpsServer = &http.Server{
+			Addr:    settings.IP + ":" + settings.SslPort,
+			Handler: route,
+		}
+		go func(server *http.Server) {
+			log.TLogln("Start https server at", server.Addr)
+			if runErr := server.ListenAndServeTLS(settings.BTsets.SslCert, settings.BTsets.SslKey); runErr != nil && runErr != http.ErrServerClosed {
+				reportWait(runErr)
+			}
+		}(httpsServer)
 	}
 
-	go func() {
-		log.TLogln("Start http server at", settings.IP+":"+settings.Port)
-		waitChan <- route.Run(settings.IP + ":" + settings.Port)
-	}()
+	httpServer = &http.Server{
+		Addr:    settings.IP + ":" + settings.Port,
+		Handler: route,
+	}
+	go func(server *http.Server) {
+		log.TLogln("Start http server at", server.Addr)
+		if runErr := server.ListenAndServe(); runErr != nil && runErr != http.ErrServerClosed {
+			reportWait(runErr)
+		}
+	}(httpServer)
+
 	return true
 }
 
@@ -128,8 +151,31 @@ func Wait() error {
 
 func Stop() {
 	dlna.Stop()
+
+	serverMu.Lock()
+	httpSrv := httpServer
+	httpsSrv := httpsServer
+	httpServer = nil
+	httpsServer = nil
+	serverMu.Unlock()
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	if httpsSrv != nil {
+		if err := httpsSrv.Shutdown(ctx); err != nil && err != http.ErrServerClosed {
+			log.TLogln("HTTPS shutdown error:", err)
+		}
+	}
+
+	if httpSrv != nil {
+		if err := httpSrv.Shutdown(ctx); err != nil && err != http.ErrServerClosed {
+			log.TLogln("HTTP shutdown error:", err)
+		}
+	}
+
 	BTS.Disconnect()
-	waitChan <- nil
+	reportWait(nil)
 }
 
 // echo godoc
