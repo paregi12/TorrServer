@@ -100,6 +100,7 @@ func (bt *BTServer) configure(ctx context.Context) {
 	// bt.config.DisableWebseeds = false  //	NE
 	bt.config.NoDefaultPortForwarding = settings.BTsets.DisableUPNP
 	bt.config.NoDHT = settings.BTsets.DisableDHT
+	bt.config.DhtConfig.NodeDbPath = filepath.Join(settings.Path, "dht.dat")
 	bt.config.DisablePEX = settings.BTsets.DisablePEX
 	bt.config.NoUpload = settings.BTsets.DisableUpload
 	bt.config.IPBlocklist = blocklist

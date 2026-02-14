@@ -17,6 +17,16 @@ import (
 )
 
 var defTrackers = []string{
+	"udp://tracker.opentrackr.org:1337/announce",
+	"udp://open.stealth.si:80/announce",
+	"udp://tracker.torrent.eu.org:451/announce",
+	"udp://tracker.moeking.me:6969/announce",
+	"udp://exodus.desync.com:6969/announce",
+	"udp://tracker.bitsearch.to:1337/announce",
+	"udp://9.rarbg.to:2920/announce",
+	"udp://tracker.tiny-vps.com:6969/announce",
+	"udp://open.demonii.com:1337/announce",
+	"udp://tracker.cyberia.is:6969/announce",
 	"http://retracker.local/announce",
 	"http://bt4.t-ru.org/ann?magnet",
 	"http://retracker.mgts.by:80/announce",
