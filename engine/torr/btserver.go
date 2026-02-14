@@ -8,6 +8,7 @@ import (
 	"net"
 	"net/http"
 	"net/url"
+	"reflect"
 	"sync"
 
 	"github.com/anacrolix/publicip"
@@ -29,6 +30,32 @@ type BTServer struct {
 	torrents map[metainfo.Hash]*Torrent
 
 	mu sync.Mutex
+}
+
+// applyHeaderObfuscationCompat enables preferred header obfuscation only when
+// the linked torrent library exposes HeaderObfuscationPolicy on ClientConfig.
+func applyHeaderObfuscationCompat(cfg *torrent.ClientConfig) {
+	if cfg == nil {
+		return
+	}
+
+	v := reflect.ValueOf(cfg)
+	if v.Kind() != reflect.Ptr || v.IsNil() {
+		return
+	}
+	v = v.Elem()
+
+	field := v.FieldByName("HeaderObfuscationPolicy")
+	if !field.IsValid() || !field.CanSet() || field.Kind() != reflect.Struct {
+		return
+	}
+
+	if requirePreferred := field.FieldByName("RequirePreferred"); requirePreferred.IsValid() && requirePreferred.CanSet() && requirePreferred.Kind() == reflect.Bool {
+		requirePreferred.SetBool(false)
+	}
+	if preferred := field.FieldByName("Preferred"); preferred.IsValid() && preferred.CanSet() && preferred.Kind() == reflect.Bool {
+		preferred.SetBool(true)
+	}
 }
 
 var privateIPBlocks []*net.IPNet
@@ -110,14 +137,11 @@ func (bt *BTServer) configure(ctx context.Context) {
 	bt.config.ExtendedHandshakeClientVersion = cliVers
 	bt.config.EstablishedConnsPerTorrent = 250
 	bt.config.TotalHalfOpenConns = 1000
-	// Encryption/Obfuscation
-	bt.config.EncryptionPolicy = torrent.EncryptionPolicy{ //	OE
-		ForceEncryption: false, //	OE
-	} //	OE
-	bt.config.HeaderObfuscationPolicy = torrent.HeaderObfuscationPolicy{ //	NE
-		RequirePreferred: false, //	NE
-		Preferred:        true,                         //	NE
-	} //	NE
+		// Encryption/Obfuscation
+		bt.config.EncryptionPolicy = torrent.EncryptionPolicy{ //	OE
+			ForceEncryption: false, //	OE
+		} //	OE
+		applyHeaderObfuscationCompat(bt.config)
 	if settings.BTsets.DownloadRateLimit > 0 {
 		bt.config.DownloadRateLimiter = utils.Limit(settings.BTsets.DownloadRateLimit * 1024)
 	}
