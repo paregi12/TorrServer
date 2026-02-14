@@ -82,11 +82,6 @@ func (bt *BTServer) Disconnect() {
 func (bt *BTServer) configure(ctx context.Context) {
 	blocklist, _ := utils.ReadBlockedIP()
 	bt.config = torrent.NewDefaultClientConfig()
-		"router.bittorrent.com:6881",
-		"router.utorrent.com:6881",
-		"dht.transmissionbt.com:6881",
-		"dht.libtorrent.org:25401",
-	}
 
 	bt.storage = torrstor.NewStorage(settings.BTsets.CacheSize)
 	bt.config.DefaultStorage = bt.storage
@@ -116,13 +111,13 @@ func (bt *BTServer) configure(ctx context.Context) {
 	bt.config.EstablishedConnsPerTorrent = 250
 	bt.config.TotalHalfOpenConns = 1000
 	// Encryption/Obfuscation
-	// bt.config.EncryptionPolicy = torrent.EncryptionPolicy{ //	OE
-	// 	ForceEncryption: settings.BTsets.ForceEncrypt, //	OE
-	// } //	OE
-	// bt.config.HeaderObfuscationPolicy = torrent.HeaderObfuscationPolicy{ //	NE
-	// 	RequirePreferred: settings.BTsets.ForceEncrypt, //	NE
-	// 	Preferred:        true,                         //	NE
-	// } //	NE
+	bt.config.EncryptionPolicy = torrent.EncryptionPolicy{ //	OE
+		ForceEncryption: false, //	OE
+	} //	OE
+	bt.config.HeaderObfuscationPolicy = torrent.HeaderObfuscationPolicy{ //	NE
+		RequirePreferred: false, //	NE
+		Preferred:        true,                         //	NE
+	} //	NE
 	if settings.BTsets.DownloadRateLimit > 0 {
 		bt.config.DownloadRateLimiter = utils.Limit(settings.BTsets.DownloadRateLimit * 1024)
 	}
