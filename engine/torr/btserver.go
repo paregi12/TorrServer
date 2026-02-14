@@ -82,7 +82,6 @@ func (bt *BTServer) Disconnect() {
 func (bt *BTServer) configure(ctx context.Context) {
 	blocklist, _ := utils.ReadBlockedIP()
 	bt.config = torrent.NewDefaultClientConfig()
-	bt.config.DhtConfig.BootstrapNodes = []string{
 		"router.bittorrent.com:6881",
 		"router.utorrent.com:6881",
 		"dht.transmissionbt.com:6881",
@@ -106,9 +105,6 @@ func (bt *BTServer) configure(ctx context.Context) {
 	// bt.config.DisableWebseeds = false  //	NE
 	bt.config.NoDefaultPortForwarding = settings.BTsets.DisableUPNP
 	bt.config.NoDHT = settings.BTsets.DisableDHT
-	bt.config.DhtConfig.NodeDbPath = filepath.Join(settings.Path, "dht.dat")
-	bt.config.DhtConfig.MaxNodes = 500
-	bt.config.DhtConfig.NoDiscardRecentNodes = true
 	bt.config.DisablePEX = settings.BTsets.DisablePEX
 	bt.config.NoUpload = settings.BTsets.DisableUpload
 	bt.config.IPBlocklist = blocklist
