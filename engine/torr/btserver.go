@@ -8,6 +8,7 @@ import (
 	"net"
 	"net/http"
 	"net/url"
+	"path/filepath"
 	"reflect"
 	"sync"
 
@@ -15,10 +16,10 @@ import (
 	"github.com/anacrolix/torrent"
 	"github.com/anacrolix/torrent/metainfo"
 
-	     "github.com/paregi12/torrentserver/engine/settings"
-	     "github.com/paregi12/torrentserver/engine/torr/storage/torrstor"
-	     "github.com/paregi12/torrentserver/engine/torr/utils"
-	     "github.com/paregi12/torrentserver/engine/version"
+	"github.com/paregi12/torrentserver/engine/settings"
+	"github.com/paregi12/torrentserver/engine/torr/storage/torrstor"
+	"github.com/paregi12/torrentserver/engine/torr/utils"
+	"github.com/paregi12/torrentserver/engine/version"
 )
 
 type BTServer struct {
@@ -55,6 +56,59 @@ func applyHeaderObfuscationCompat(cfg *torrent.ClientConfig) {
 	}
 	if preferred := field.FieldByName("Preferred"); preferred.IsValid() && preferred.CanSet() && preferred.Kind() == reflect.Bool {
 		preferred.SetBool(true)
+	}
+}
+
+// applyDhtConfigCompat safely configures DHT persistence and bootstrap nodes via reflection.
+func applyDhtConfigCompat(cfg *torrent.ClientConfig) {
+	if cfg == nil {
+		return
+	}
+
+	v := reflect.ValueOf(cfg)
+	if v.Kind() != reflect.Ptr || v.IsNil() {
+		return
+	}
+	v = v.Elem()
+
+	// Try to find DhtConfig or DhtServerConfig (different library versions use different names)
+	dhtField := v.FieldByName("DhtConfig")
+	if !dhtField.IsValid() {
+		dhtField = v.FieldByName("DhtServerConfig")
+	}
+
+	if !dhtField.IsValid() || !dhtField.CanSet() {
+		return
+	}
+
+	// 1. Set NodeDbPath for DHT Persistence
+	nodeDbPath := dhtField.FieldByName("NodeDbPath")
+	if nodeDbPath.IsValid() && nodeDbPath.CanSet() && nodeDbPath.Kind() == reflect.String {
+		nodeDbPath.SetString(filepath.Join(settings.Path, "dht.dat"))
+	}
+
+	// 2. Set BootstrapNodes
+	bootstrap := dhtField.FieldByName("BootstrapNodes")
+	if bootstrap.IsValid() && bootstrap.CanSet() && bootstrap.Kind() == reflect.Slice {
+		nodes := []string{
+			"router.bittorrent.com:6881",
+			"router.utorrent.com:6881",
+			"dht.transmissionbt.com:6881",
+			"dht.libtorrent.org:25401",
+		}
+		bootstrap.Set(reflect.ValueOf(nodes))
+	}
+
+	// 3. Set MaxNodes
+	maxNodes := dhtField.FieldByName("MaxNodes")
+	if maxNodes.IsValid() && maxNodes.CanSet() && (maxNodes.Kind() == reflect.Int || maxNodes.Kind() == reflect.Int64) {
+		maxNodes.SetInt(500)
+	}
+
+	// 4. Set NoDiscardRecentNodes
+	noDiscard := dhtField.FieldByName("NoDiscardRecentNodes")
+	if noDiscard.IsValid() && noDiscard.CanSet() && noDiscard.Kind() == reflect.Bool {
+		noDiscard.SetBool(true)
 	}
 }
 
@@ -122,9 +176,6 @@ func (bt *BTServer) configure(ctx context.Context) {
 	bt.config.DisableIPv6 = !settings.BTsets.EnableIPv6
 	bt.config.DisableTCP = settings.BTsets.DisableTCP
 	bt.config.DisableUTP = settings.BTsets.DisableUTP
-	//	https://github.com/anacrolix/torrent/issues/703
-	// bt.config.DisableWebtorrent = true //	NE
-	// bt.config.DisableWebseeds = false  //	NE
 	bt.config.NoDefaultPortForwarding = settings.BTsets.DisableUPNP
 	bt.config.NoDHT = settings.BTsets.DisableDHT
 	bt.config.DisablePEX = settings.BTsets.DisablePEX
@@ -137,11 +188,16 @@ func (bt *BTServer) configure(ctx context.Context) {
 	bt.config.ExtendedHandshakeClientVersion = cliVers
 	bt.config.EstablishedConnsPerTorrent = 250
 	bt.config.TotalHalfOpenConns = 1000
-		// Encryption/Obfuscation
-		bt.config.EncryptionPolicy = torrent.EncryptionPolicy{ //	OE
-			ForceEncryption: false, //	OE
-		} //	OE
-		applyHeaderObfuscationCompat(bt.config)
+
+	// Encryption/Obfuscation (SAFE MODE)
+	bt.config.EncryptionPolicy = torrent.EncryptionPolicy{
+		ForceEncryption: false,
+	}
+	applyHeaderObfuscationCompat(bt.config)
+
+	// DHT Persistence (SAFE MODE)
+	applyDhtConfigCompat(bt.config)
+
 	if settings.BTsets.DownloadRateLimit > 0 {
 		bt.config.DownloadRateLimiter = utils.Limit(settings.BTsets.DownloadRateLimit * 1024)
 	}
@@ -240,9 +296,6 @@ func (bt *BTServer) configureProxy() error {
 	if proxyMode == "full" {
 		log.Printf("Configuring proxy for all BitTorrent traffic: %s://%s", scheme, parsedURL.Host)
 
-		// Set ProxyURL - this will be used by anacrolix/torrent for all BitTorrent traffic
-		// bt.config.ProxyURL = proxyURL
-
 		// Also set HTTPProxy explicitly for HTTP tracker requests
 		bt.config.HTTPProxy = func(req *http.Request) (*url.URL, error) {
 			return parsedURL, nil
@@ -251,10 +304,6 @@ func (bt *BTServer) configureProxy() error {
 		log.Println("Proxy configured successfully for all BitTorrent connections (tracker, DHT, peers)")
 	} else if proxyMode == "peers" {
 		log.Printf("Configuring proxy for peer connections only: %s://%s", scheme, parsedURL.Host)
-
-		// Set ProxyURL for peer connections, but don't set HTTPProxy
-		// This routes DHT and peer connections through proxy, but not HTTP tracker requests
-		// bt.config.ProxyURL = proxyURL
 
 		log.Println("Proxy configured successfully for peer and DHT connections only")
 	} else {
