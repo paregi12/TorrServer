@@ -101,6 +101,8 @@ func (bt *BTServer) configure(ctx context.Context) {
 	bt.config.NoDefaultPortForwarding = settings.BTsets.DisableUPNP
 	bt.config.NoDHT = settings.BTsets.DisableDHT
 	bt.config.DhtConfig.NodeDbPath = filepath.Join(settings.Path, "dht.dat")
+	bt.config.DhtConfig.MaxNodes = 500
+	bt.config.DhtConfig.NoDiscardRecentNodes = true
 	bt.config.DisablePEX = settings.BTsets.DisablePEX
 	bt.config.NoUpload = settings.BTsets.DisableUpload
 	bt.config.IPBlocklist = blocklist
@@ -110,7 +112,7 @@ func (bt *BTServer) configure(ctx context.Context) {
 	bt.config.HTTPUserAgent = userAgent
 	bt.config.ExtendedHandshakeClientVersion = cliVers
 	bt.config.EstablishedConnsPerTorrent = settings.BTsets.ConnectionsLimit
-	bt.config.TotalHalfOpenConns = 500
+	bt.config.TotalHalfOpenConns = 1000
 	// Encryption/Obfuscation
 	// bt.config.EncryptionPolicy = torrent.EncryptionPolicy{ //	OE
 	// 	ForceEncryption: settings.BTsets.ForceEncrypt, //	OE
