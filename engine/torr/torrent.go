@@ -221,7 +221,7 @@ func (t *Torrent) updateRA() {
 	// 	}
 	// 	go t.cache.AdjustRA(adj)
 	// }
-	adj := int64(16 << 20) // 16 MB fixed RA
+	adj := int64(128 << 20) // 128 MB aggressive RA for instant streaming
 	go t.cache.AdjustRA(adj)
 }
 
