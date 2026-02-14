@@ -117,7 +117,7 @@ func (bt *BTServer) configure(ctx context.Context) {
 	bt.config.UpnpID = upnpID
 	bt.config.HTTPUserAgent = userAgent
 	bt.config.ExtendedHandshakeClientVersion = cliVers
-	bt.config.EstablishedConnsPerTorrent = settings.BTsets.ConnectionsLimit
+	bt.config.EstablishedConnsPerTorrent = 250
 	bt.config.TotalHalfOpenConns = 1000
 	// Encryption/Obfuscation
 	// bt.config.EncryptionPolicy = torrent.EncryptionPolicy{ //	OE
